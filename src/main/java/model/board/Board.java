@@ -36,7 +36,7 @@ public class Board implements BoardInterface {
 
     @Override
     public Optional<PieceInterface> getWhiteKing() {
-        return whitePieces.stream().filter(piece -> piece instanceof King).findFirst();
+        return Optional.ofNullable(whiteKing);
     }
 
     @Override
@@ -46,7 +46,7 @@ public class Board implements BoardInterface {
 
     @Override
     public Optional<PieceInterface> getBlackKing() {
-        return blackPieces.stream().filter(piece -> piece instanceof King).findFirst();
+        return Optional.ofNullable(blackKing);
     }
 
     @Override

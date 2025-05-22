@@ -246,7 +246,7 @@ public class GameWindowImpl implements GameWindow, GameWindowInterface {
         endLogicHelper(outputMessage, title);
     }
 
-    public void stalemateOccurred(){
+    public void stalemateOccurred() {
         String outputMessage = "Stalemate! Set up a new game? \n" +
                 "Choosing \"No\" lets you look at the final situation.";
 
@@ -255,7 +255,7 @@ public class GameWindowImpl implements GameWindow, GameWindowInterface {
         endLogicHelper(outputMessage, title);
     }
 
-    private void endLogicHelper(String outputMessage, String title){
+    private void endLogicHelper(String outputMessage, String title) {
         if (timer != null) timer.stop();
         int n = JOptionPane.showConfirmDialog(
                 gameWindow,

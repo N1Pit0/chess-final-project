@@ -1,6 +1,5 @@
 package services.board;
 
-import model.pieces.King;
 import services.enums.PieceColor;
 import services.strategy.common.PieceInterface;
 
