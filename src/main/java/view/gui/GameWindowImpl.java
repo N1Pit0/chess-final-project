@@ -150,7 +150,7 @@ public class GameWindowImpl implements GameWindow, GameWindowInterface {
             timer.stop();
             int n = JOptionPane.showConfirmDialog(
                     gameWindow,
-                    opponentPlayerName + " wins by time! Play a new game? \n" +
+                    opponentPlayerName + " wins by time! Match a new game? \n" +
                             "Choosing \"No\" quits the game.",
                     opponentPlayerName + " wins!",
                     JOptionPane.YES_NO_OPTION);
