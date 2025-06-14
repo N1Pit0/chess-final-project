@@ -7,6 +7,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import services.board.BoardService;
 import services.board.SquareInterface;
+import services.checkmatedetection.CheckmateDetectorImpl;
 import services.enums.PieceColor;
 import services.strategy.common.PieceInterface;
 
