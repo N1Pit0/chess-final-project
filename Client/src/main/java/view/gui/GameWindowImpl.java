@@ -3,13 +3,13 @@ package view.gui;
 import controller.GameController;
 import controller.GameControllerImpl;
 import controller.GameWindowInterface;
+import dtos.enums.PieceColor;
 import model.board.Board;
 import services.board.BoardInterface;
 import services.board.BoardService;
 import services.board.BoardServiceImpl;
 import services.checkmatedetection.CheckmateDetector;
 import services.checkmatedetection.CheckmateDetectorImpl;
-import services.enums.PieceColor;
 import services.utils.Clock;
 import view.BoardView;
 import view.mouseListener.CustomBoardMouseListenerImpl;
@@ -20,8 +20,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import static services.enums.ImagePath.RESOURCES_WPAWN_PNG;
-import static services.enums.PieceColor.BLACK;
+import static dtos.enums.ImagePath.RESOURCES_WPAWN_PNG;
 
 
 public class GameWindowImpl implements GameWindow, GameWindowInterface {
@@ -229,7 +228,7 @@ public class GameWindowImpl implements GameWindow, GameWindowInterface {
     public void checkmateOccurred(PieceColor pieceColor) {
         String outputMessage = "";
         String title = "";
-        if (pieceColor.equals(BLACK)) {
+        if (pieceColor.equals(PieceColor.BLACK)) {
 
             outputMessage = "White wins by checkmate! Set up a new game? \n" +
                     "Choosing \"No\" lets you look at the final situation.";

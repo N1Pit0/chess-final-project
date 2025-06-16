@@ -1,16 +1,19 @@
 package model.pieces;
 
+import dtos.enums.PieceColor;
+import dtos.enums.PieceType;
 import model.pieces.common.Piece;
 import services.board.SquareInterface;
-import services.enums.PieceColor;
+
 import services.strategy.KnightStrategy;
 
 import java.util.List;
 
 public class Knight extends Piece {
 
-    public Knight(PieceColor color, SquareInterface initSq, String img_file) {
-        super(color, initSq, img_file);
+    public Knight(PieceColor color, SquareInterface initSq) {
+        super(color, initSq);
+        setPieceType(PieceType.KNIGHT);
     }
 
     @Override

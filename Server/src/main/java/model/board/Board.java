@@ -1,20 +1,20 @@
 package model.board;
 
+import dtos.enums.PieceColor;
 import lombok.Getter;
 import lombok.Setter;
 import model.pieces.*;
 import services.board.BoardInterface;
 import services.board.SquareInterface;
-import services.enums.PieceColor;
 import services.strategy.common.PieceInterface;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static services.enums.ImagePath.*;
-import static services.enums.PieceColor.BLACK;
-import static services.enums.PieceColor.WHITE;
+import static dtos.enums.PieceColor.BLACK;
+import static dtos.enums.PieceColor.WHITE;
+
 
 @Getter
 @Setter
@@ -58,32 +58,32 @@ public class Board implements BoardInterface {
     public void initializePieces() {
 
         for (int x = 0; x < 8; x++) {
-            boardSquareArray[1][x].put(new Pawn(BLACK, boardSquareArray[1][x], RESOURCES_BPAWN_PNG.label));
-            boardSquareArray[6][x].put(new Pawn(WHITE, boardSquareArray[6][x], RESOURCES_WPAWN_PNG.label));
+            boardSquareArray[1][x].put(new Pawn(BLACK, boardSquareArray[1][x]));
+            boardSquareArray[6][x].put(new Pawn(WHITE, boardSquareArray[6][x]));
         }
 
-        boardSquareArray[7][3].put(new Queen(WHITE, boardSquareArray[7][3], RESOURCES_WQUEEN_PNG.label));
-        boardSquareArray[0][3].put(new Queen(BLACK, boardSquareArray[0][3], RESOURCES_BQUEEN_PNG.label));
+        boardSquareArray[7][3].put(new Queen(WHITE, boardSquareArray[7][3]));
+        boardSquareArray[0][3].put(new Queen(BLACK, boardSquareArray[0][3]));
 
-        this.blackKing = new King(BLACK, boardSquareArray[0][4], RESOURCES_BKING_PNG.label);
-        this.whiteKing = new King(WHITE, boardSquareArray[7][4], RESOURCES_WKING_PNG.label);
+        this.blackKing = new King(BLACK, boardSquareArray[0][4]);
+        this.whiteKing = new King(WHITE, boardSquareArray[7][4]);
         boardSquareArray[0][4].put(blackKing);
         boardSquareArray[7][4].put(whiteKing);
 
-        boardSquareArray[0][0].put(new Rook(BLACK, boardSquareArray[0][0], RESOURCES_BROOK_PNG.label));
-        boardSquareArray[0][7].put(new Rook(BLACK, boardSquareArray[0][7], RESOURCES_BROOK_PNG.label));
-        boardSquareArray[7][0].put(new Rook(WHITE, boardSquareArray[7][0], RESOURCES_WROOK_PNG.label));
-        boardSquareArray[7][7].put(new Rook(WHITE, boardSquareArray[7][7], RESOURCES_WROOK_PNG.label));
+        boardSquareArray[0][0].put(new Rook(BLACK, boardSquareArray[0][0]));
+        boardSquareArray[0][7].put(new Rook(BLACK, boardSquareArray[0][7]));
+        boardSquareArray[7][0].put(new Rook(WHITE, boardSquareArray[7][0]));
+        boardSquareArray[7][7].put(new Rook(WHITE, boardSquareArray[7][7]));
 
-        boardSquareArray[0][1].put(new Knight(BLACK, boardSquareArray[0][1], RESOURCES_BKNIGHT_PNG.label));
-        boardSquareArray[0][6].put(new Knight(BLACK, boardSquareArray[0][6], RESOURCES_BKNIGHT_PNG.label));
-        boardSquareArray[7][1].put(new Knight(WHITE, boardSquareArray[7][1], RESOURCES_WKNIGHT_PNG.label));
-        boardSquareArray[7][6].put(new Knight(WHITE, boardSquareArray[7][6], RESOURCES_WKNIGHT_PNG.label));
+        boardSquareArray[0][1].put(new Knight(BLACK, boardSquareArray[0][1]));
+        boardSquareArray[0][6].put(new Knight(BLACK, boardSquareArray[0][6]));
+        boardSquareArray[7][1].put(new Knight(WHITE, boardSquareArray[7][1]));
+        boardSquareArray[7][6].put(new Knight(WHITE, boardSquareArray[7][6]));
 
-        boardSquareArray[0][2].put(new Bishop(BLACK, boardSquareArray[0][2], RESOURCES_BBISHOP_PNG.label));
-        boardSquareArray[0][5].put(new Bishop(BLACK, boardSquareArray[0][5], RESOURCES_BBISHOP_PNG.label));
-        boardSquareArray[7][2].put(new Bishop(WHITE, boardSquareArray[7][2], RESOURCES_WBISHOP_PNG.label));
-        boardSquareArray[7][5].put(new Bishop(WHITE, boardSquareArray[7][5], RESOURCES_WBISHOP_PNG.label));
+        boardSquareArray[0][2].put(new Bishop(BLACK, boardSquareArray[0][2]));
+        boardSquareArray[0][5].put(new Bishop(BLACK, boardSquareArray[0][5]));
+        boardSquareArray[7][2].put(new Bishop(WHITE, boardSquareArray[7][2]));
+        boardSquareArray[7][5].put(new Bishop(WHITE, boardSquareArray[7][5]));
 
 
         for (int y = 0; y < 2; y++) {

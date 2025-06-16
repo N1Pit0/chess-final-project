@@ -1,10 +1,10 @@
 package model.board;
 
+import dtos.enums.PieceColor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import services.board.SquareInterface;
-import services.enums.PieceColor;
 import services.strategy.common.PieceInterface;
 
 

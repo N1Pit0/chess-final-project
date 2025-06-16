@@ -1,12 +1,12 @@
 package services.board;
 
+import dtos.enums.PieceColor;
 import model.board.Square;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import services.enums.PieceColor;
 import services.strategy.common.PieceInterface;
 
 import java.util.ArrayList;

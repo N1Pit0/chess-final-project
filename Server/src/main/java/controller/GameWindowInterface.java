@@ -1,6 +1,7 @@
 package controller;
 
-import services.enums.PieceColor;
+
+import dtos.enums.PieceColor;
 
 public interface GameWindowInterface {
     void checkmateOccurred(PieceColor pieceColor);

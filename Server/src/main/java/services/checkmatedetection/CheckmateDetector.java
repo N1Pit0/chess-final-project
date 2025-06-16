@@ -1,7 +1,7 @@
 package services.checkmatedetection;
 
+import dtos.enums.PieceColor;
 import services.board.BoardService;
-import services.enums.PieceColor;
 
 public interface CheckmateDetector {
     boolean isInCheck(BoardService boardService, PieceColor pieceColor);

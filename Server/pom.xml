@@ -23,6 +23,12 @@
     <dependencies>
 
         <dependency>
+            <groupId>chess-java-refatored</groupId>
+            <artifactId>Shared</artifactId>
+            <version>1.0</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
         </dependency>

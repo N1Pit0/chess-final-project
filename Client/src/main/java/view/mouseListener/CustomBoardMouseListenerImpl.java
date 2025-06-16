@@ -1,9 +1,9 @@
 package view.mouseListener;
 
 import controller.GameController;
+import dtos.enums.PieceColor;
 import services.board.BoardService;
 import services.board.SquareInterface;
-import services.enums.PieceColor;
 import view.BoardView;
 import view.SquareView;
 import view.gui.GameWindow;

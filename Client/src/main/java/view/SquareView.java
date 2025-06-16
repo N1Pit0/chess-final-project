@@ -7,7 +7,8 @@ import services.board.SquareInterface;
 import javax.swing.*;
 import java.awt.*;
 
-import static services.enums.PieceColor.WHITE;
+import static dtos.enums.PieceColor.WHITE;
+
 
 @Getter
 @Setter

@@ -2,10 +2,11 @@ package services.board;
 
 import services.strategy.common.PieceInterface;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 
-public interface BoardInterface {
+public interface BoardInterface extends Serializable {
 
     SquareInterface[][] getBoardSquareArray();
 

@@ -1,15 +1,15 @@
 package services.strategy;
 
+import dtos.enums.PieceColor;
 import services.board.SquareInterface;
-import services.enums.PieceColor;
 import services.strategy.common.PieceInterface;
 import services.strategy.common.PieceStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static services.enums.PieceColor.BLACK;
-import static services.enums.PieceColor.WHITE;
+import static dtos.enums.PieceColor.BLACK;
+import static dtos.enums.PieceColor.WHITE;
 import static services.utils.MovementUtil.isInBound;
 
 public class PawnStrategy extends PieceStrategy {

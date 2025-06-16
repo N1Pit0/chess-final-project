@@ -1,13 +1,15 @@
 package services.strategy.common;
 
+import dtos.enums.PieceColor;
+
+import dtos.enums.PieceType;
 import services.board.BoardService;
 import services.board.SquareInterface;
-import services.enums.PieceColor;
 
-import java.awt.*;
+import java.io.Serializable;
 import java.util.List;
 
-public interface PieceInterface {
+public interface PieceInterface extends Serializable {
     List<SquareInterface> getLegalMoves(SquareInterface[][] squareArrayBoard);
 
     PieceColor getPieceColor();
@@ -20,6 +22,6 @@ public interface PieceInterface {
 
     boolean isWasMoved();
 
-    Image getImage();
+    PieceType getPieceType();
 
 }

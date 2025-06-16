@@ -1,15 +1,16 @@
 package services.checkmatedetection;
 
+import dtos.enums.PieceColor;
 import services.board.BoardService;
 import services.board.SquareInterface;
-import services.enums.PieceColor;
 import services.strategy.common.PieceInterface;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static services.enums.PieceColor.WHITE;
+import static dtos.enums.PieceColor.WHITE;
+
 
 public class CheckmateDetectorImpl implements CheckmateDetector {
 
@@ -17,7 +18,7 @@ public class CheckmateDetectorImpl implements CheckmateDetector {
     public boolean isInCheck(BoardService boardService, PieceColor pieceColor) {
 
         return pieceColor.equals(WHITE)
-                ? checkHelper(boardService, PieceColor.WHITE)
+                ? checkHelper(boardService, WHITE)
                 : checkHelper(boardService, PieceColor.BLACK);
     }
 
@@ -74,7 +75,7 @@ public class CheckmateDetectorImpl implements CheckmateDetector {
     }
 
     private boolean checkHelper(BoardService boardService, PieceColor pieceColor) {
-        Optional<PieceInterface> optionalKing = pieceColor.equals(PieceColor.WHITE) ? boardService.getWhiteKing() : boardService.getBlackKing();
+        Optional<PieceInterface> optionalKing = pieceColor.equals(WHITE) ? boardService.getWhiteKing() : boardService.getBlackKing();
 
         if (optionalKing.isEmpty()) {
             return false;
@@ -84,7 +85,7 @@ public class CheckmateDetectorImpl implements CheckmateDetector {
 
         List<PieceInterface> opponentPieces = king
                 .getPieceColor()
-                .equals(PieceColor.WHITE) ? boardService.getBlackPieces() : boardService.getWhitePieces();
+                .equals(WHITE) ? boardService.getBlackPieces() : boardService.getWhitePieces();
 
         return opponentPieces.stream().anyMatch(piece ->
                 piece.getLegalMoves(boardService.getBoardSquareArray()).contains(king.getCurrentSquare()));

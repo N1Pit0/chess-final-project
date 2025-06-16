@@ -1,4 +1,4 @@
-package services.enums;
+package dtos.enums;
 
 public enum PieceColor {
     BLACK,

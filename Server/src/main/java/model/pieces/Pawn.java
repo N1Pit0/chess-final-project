@@ -1,10 +1,12 @@
 package model.pieces;
 
+import dtos.enums.PieceColor;
+import dtos.enums.PieceType;
 import lombok.Getter;
 import model.pieces.common.Piece;
 import services.board.BoardService;
 import services.board.SquareInterface;
-import services.enums.PieceColor;
+
 import services.strategy.PawnStrategy;
 
 import java.util.List;
@@ -12,8 +14,9 @@ import java.util.List;
 @Getter
 public class Pawn extends Piece {
 
-    public Pawn(PieceColor color, SquareInterface initSq, String img_file) {
-        super(color, initSq, img_file);
+    public Pawn(PieceColor color, SquareInterface initSq) {
+        super(color, initSq);
+        setPieceType(PieceType.PAWN);
     }
 
     @Override

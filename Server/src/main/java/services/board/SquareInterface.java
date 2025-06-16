@@ -1,9 +1,11 @@
 package services.board;
 
-import services.enums.PieceColor;
+import dtos.enums.PieceColor;
 import services.strategy.common.PieceInterface;
 
-public interface SquareInterface {
+import java.io.Serializable;
+
+public interface SquareInterface extends Serializable {
     PieceColor getSquareColor();
 
     PieceInterface getOccupyingPiece();

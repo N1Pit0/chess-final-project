@@ -1,5 +1,6 @@
 package services.checkmatedetection;
 
+import dtos.enums.PieceColor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -7,8 +8,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import services.board.BoardService;
 import services.board.SquareInterface;
-import services.checkmatedetection.CheckmateDetectorImpl;
-import services.enums.PieceColor;
 import services.strategy.common.PieceInterface;
 
 import java.util.ArrayList;

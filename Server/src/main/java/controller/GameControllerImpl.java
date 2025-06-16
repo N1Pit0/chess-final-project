@@ -1,15 +1,15 @@
 package controller;
 
+import dtos.enums.PieceColor;
 import services.board.BoardService;
 import services.board.SquareInterface;
 import services.checkmatedetection.CheckmateDetector;
-import services.enums.PieceColor;
 import services.strategy.common.PieceInterface;
 
 import java.util.List;
 
-import static services.enums.PieceColor.BLACK;
-import static services.enums.PieceColor.WHITE;
+import static dtos.enums.PieceColor.BLACK;
+import static dtos.enums.PieceColor.WHITE;
 
 public class GameControllerImpl implements GameController {
     private final BoardService boardService;
