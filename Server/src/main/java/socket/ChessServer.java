@@ -1,5 +1,7 @@
 package socket;
 
+import controller.ChessGameController;
+import controller.GameController;
 import dtos.BoardState;
 import dtos.GameInit;
 import dtos.enums.PieceColor;
@@ -7,22 +9,30 @@ import model.board.Board;
 import services.board.BoardInterface;
 import services.board.BoardService;
 import services.board.BoardServiceImpl;
+import services.checkmatedetection.CheckmateDetectorImpl;
 
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 
 public class ChessServer {
 
-    private final static BoardInterface board = new Board();
+    private final BoardInterface board = new Board();
     private final BoardService boardService = new BoardServiceImpl(board);
+
+
+    private final ChessGameController gameController;
+
+    public ChessServer() {
+        gameController = new ChessGameController(board, new CheckmateDetectorImpl());
+    }
 
     private final Matchmaker matchmaker = new SimpleMatchmaker();
 
     public void handleNewClient(Socket client) {
-
 
 
         Matchmaker.Match match = matchmaker.addClient(client);
@@ -57,6 +67,8 @@ public class ChessServer {
             ObjectInputStream blackIn = (p1Color == PieceColor.WHITE) ? in2 : in1;
             ObjectOutputStream blackOut = (p1Color == PieceColor.WHITE) ? out2 : out1;
 
+
+            startBoardSync(whiteOut, blackOut);
             new Thread(() -> handleGame(whiteIn, whiteOut, blackIn, blackOut)).start();
 
         } catch (IOException e) {
@@ -69,12 +81,31 @@ public class ChessServer {
         try {
             while (true) {
                 // White move
-                BoardState whiteMove = (BoardState) whiteIn.readObject();
-                blackOut.writeObject(whiteMove);
+                String whiteMove = (String) whiteIn.readObject();
+//                blackOut.writeObject(whiteMove);
+                System.out.println(whiteMove);
+                String[] squares = whiteMove.split(" ");
+                String from = squares[0];
+                String to = squares[1];
+                if (gameController.setPlayablePiece(from)) {
+                    ChessGameController.GameStateEnum gameState = gameController.makeMove(to);
+                    if (gameState == ChessGameController.GameStateEnum.ONGOING) {
+                        System.out.println("made a move");
+                    }
+                }
 
-                // Black move
-                BoardState blackMove = (BoardState) blackIn.readObject();
-                whiteOut.writeObject(blackMove);
+                boardService.getWhitePieces().forEach(x -> {
+                    if (x.getCurrentSquare() != null){
+                        System.out.print(x.getCurrentSquare().toAlgebraic() +" ");
+                    }
+                });
+                System.out.println();
+
+
+////                 Black move
+//                var blackMove = blackIn.readObject();
+////                whiteOut.writeObject(blackMove);
+//                System.out.println(blackMove);
             }
         } catch (IOException | ClassNotFoundException e) {
             System.out.println("A player disconnected or game ended: " + e.getMessage());
@@ -97,4 +128,20 @@ public class ChessServer {
             e.printStackTrace();
         }
     }
+
+
+    private void startBoardSync(ObjectOutputStream whiteOut, ObjectOutputStream blackOut) {
+        ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
+        scheduler.scheduleAtFixedRate(() -> {
+            try {
+                BoardState boardState = board.toBoardState();
+                whiteOut.writeObject(boardState);
+                blackOut.writeObject(boardState);
+            } catch (IOException e) {
+                System.out.println("Failed to send board state: " + e.getMessage());
+                scheduler.shutdown();  // stop sending if a client disconnects
+            }
+        }, 0, 1, java.util.concurrent.TimeUnit.SECONDS); // every 1 second
+    }
+
 }

@@ -1,5 +1,6 @@
 package services.strategy.common;
 
+import dtos.PieceState;
 import dtos.enums.PieceColor;
 
 import dtos.enums.PieceType;
@@ -23,5 +24,7 @@ public interface PieceInterface extends Serializable {
     boolean isWasMoved();
 
     PieceType getPieceType();
+
+    PieceState toPieceState();
 
 }

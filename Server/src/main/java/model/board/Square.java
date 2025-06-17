@@ -1,5 +1,6 @@
 package model.board;
 
+import dtos.SquareState;
 import dtos.enums.PieceColor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -34,5 +35,18 @@ public class Square implements SquareInterface {
         this.occupyingPiece = piece;
         piece.setCurrentSquare(this);
     }
+
+    @Override
+    public SquareState toSquareState() {
+        return new SquareState(xNum,yNum,squareColor,null);
+    }
+
+    @Override
+    public String toAlgebraic() {
+        char file = (char) ('a' + xNum);       // xNum: 0 → 'a', 1 → 'b', ..., 7 → 'h'
+        int rank = 8 - yNum;                   // yNum: 0 → 8, 1 → 7, ..., 7 → 1
+        return String.valueOf(file) + rank;
+    }
+
 
 }

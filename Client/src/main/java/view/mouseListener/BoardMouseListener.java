@@ -2,6 +2,7 @@ package view.mouseListener;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 
 public class BoardMouseListener extends MouseAdapter {
 
@@ -18,6 +19,10 @@ public class BoardMouseListener extends MouseAdapter {
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        mouseListener.handleMouseReleased(e);
+        try {
+            mouseListener.handleMouseReleased(e);
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
     }
 }

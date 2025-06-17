@@ -24,9 +24,9 @@ public class BoardServiceImpl implements BoardService {
     public BoardServiceImpl(BoardInterface boardInterface) {
         this.boardInterface = boardInterface;
 
-        initializeBoardSquares();
-
-        initializePieces();
+//        initializeBoardSquares();
+//
+//        initializePieces();
 
         whiteTurn = true;
 

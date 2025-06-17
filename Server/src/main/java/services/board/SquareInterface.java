@@ -1,5 +1,6 @@
 package services.board;
 
+import dtos.SquareState;
 import dtos.enums.PieceColor;
 import services.strategy.common.PieceInterface;
 
@@ -23,5 +24,10 @@ public interface SquareInterface extends Serializable {
     void setYNum(int yNum);
 
     void put(PieceInterface piece);
+
+    SquareState toSquareState();
+
+    String toAlgebraic();
+
 
 }

@@ -1,5 +1,7 @@
 package model.pieces.common;
 
+import dtos.PieceState;
+import dtos.SquareState;
 import dtos.enums.PieceColor;
 import dtos.enums.PieceType;
 import lombok.Getter;
@@ -28,6 +30,13 @@ public abstract class Piece implements PieceInterface {
     public boolean move(SquareInterface targetSquare, BoardService boardService) {
 
         return Move.makeMove(this, targetSquare, boardService);
+    }
+
+    @Override
+    public PieceState toPieceState(){
+        SquareState squareState = currentSquare.toSquareState();
+        //        squareState.setOccupyingPiece(pieceState);
+        return new PieceState(pieceColor,squareState,pieceType,wasMoved);
     }
 
     // No implementation, to be implemented by each subclass

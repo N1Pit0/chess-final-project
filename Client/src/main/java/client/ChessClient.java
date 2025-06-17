@@ -27,13 +27,13 @@ public class ChessClient {
                 if (isMyTurn) {
                     System.out.print("Press Enter to send move...");
                     scanner.nextLine();
-                    BoardState myMove = BoardState.dummy();
-                    out.writeObject(myMove);
+//                    BoardState myMove = BoardState.dummy();
+                    out.writeObject("myMove");
                     System.out.println("Move sent!");
                 }
 
-                BoardState opponentMove = (BoardState) in.readObject();
-                System.out.println("Received opponent move: " + opponentMove);
+//                BoardState opponentMove = (BoardState) in.readObject();
+//                System.out.println("Received opponent move: " + opponentMove);
                 isMyTurn = true;
             }
         } catch (IOException | ClassNotFoundException e) {

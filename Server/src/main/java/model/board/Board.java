@@ -1,14 +1,19 @@
 package model.board;
 
+import dtos.BoardState;
+import dtos.PieceState;
+import dtos.SquareState;
 import dtos.enums.PieceColor;
 import lombok.Getter;
 import lombok.Setter;
 import model.pieces.*;
+import model.pieces.common.Piece;
 import services.board.BoardInterface;
 import services.board.SquareInterface;
 import services.strategy.common.PieceInterface;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,10 +33,15 @@ public class Board implements BoardInterface {
     private King whiteKing;
     private King blackKing;
 
+    private boolean isWhiteTurn;
+
     public Board() {
+
         this.boardSquareArray = new SquareInterface[8][8];
         this.blackPieces = new ArrayList<>();
         this.whitePieces = new ArrayList<>();
+        initializeBoardSquares();
+        initializePieces();
     }
 
     @Override
@@ -104,4 +114,26 @@ public class Board implements BoardInterface {
             }
         }
     }
+
+    @Override
+    public BoardState toBoardState() {
+        BoardState boardState = new BoardState();
+        SquareState[][] squareStateArray = new SquareState[8][8];
+        for (int x = 0; x < 8; x++) {
+            for (int y = 0; y < 8; y++) {
+                if (boardSquareArray[x][y] != null)
+                    squareStateArray[x][y] = boardSquareArray[x][y].toSquareState();
+            }
+        }
+        boardState.setBoardSquareArray(squareStateArray);
+        List<PieceState> whitePieceStates = whitePieces.stream().map(PieceInterface::toPieceState).toList();
+        List<PieceState> blackPieceStates = blackPieces.stream().map(PieceInterface::toPieceState).toList();
+        PieceState whiteKingState = whiteKing != null ? whiteKing.toPieceState() : null;
+        PieceState blackKingState = blackKing != null ? blackKing.toPieceState() : null;
+
+        return new BoardState(squareStateArray,blackPieceStates, whitePieceStates, whiteKingState, blackKingState, isWhiteTurn);
+
+
+    }
+
 }

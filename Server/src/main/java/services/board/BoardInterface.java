@@ -1,5 +1,6 @@
 package services.board;
 
+import dtos.BoardState;
 import services.strategy.common.PieceInterface;
 
 import java.io.Serializable;
@@ -29,4 +30,6 @@ public interface BoardInterface extends Serializable {
     void initializePieces();
 
     void initializeBoardSquares();
+
+    BoardState toBoardState();
 }
