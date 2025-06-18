@@ -45,12 +45,6 @@
             <version>1.0</version>
             <scope>compile</scope>
         </dependency>
-        <dependency>
-            <groupId>chess-java-refatored</groupId>
-            <artifactId>Shared</artifactId>
-            <version>1.0</version>
-            <scope>compile</scope>
-        </dependency>
 
     </dependencies>
 
