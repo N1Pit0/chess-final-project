@@ -1,19 +1,29 @@
 package server.model.entity;
 
-import jakarta.persistence.*;
+import lombok.Data;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.time.LocalDateTime;
 
-@Entity
+@Data
+@Document(collection = "matches")
 public class Match {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(unique = true, nullable = false, name = "match_id")
-    private Long id;
+    private String id;
 
-    @ManyToMany(mappedBy = "matches")
-    private Set<Match> matches = new HashSet<>();
+    @DBRef
+    private User user1;
+
+    @DBRef
+    private User user2;
+
+    private String result;
+
+    private String pgn;
+
+    private LocalDateTime datePlayed;
 
 }
