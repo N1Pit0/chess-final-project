@@ -17,6 +17,7 @@ import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class ChessServer {
 
@@ -27,7 +28,7 @@ public class ChessServer {
     private final ChessGameController gameController;
 
     public ChessServer() {
-        gameController = new ChessGameController(board, new CheckmateDetectorImpl());
+        gameController = new ChessGameController(boardService, new CheckmateDetectorImpl());
     }
 
     private final Matchmaker matchmaker = new SimpleMatchmaker();
@@ -80,27 +81,33 @@ public class ChessServer {
                             ObjectInputStream blackIn, ObjectOutputStream blackOut) {
         try {
             while (true) {
-                // White move
-                String whiteMove = (String) whiteIn.readObject();
+                if(boardService.isWhiteTurn()) {
+                    String whiteMove = (String) whiteIn.readObject();
 //                blackOut.writeObject(whiteMove);
-                System.out.println(whiteMove);
-                String[] squares = whiteMove.split(" ");
-                String from = squares[0];
-                String to = squares[1];
-                if (gameController.setPlayablePiece(from)) {
-                    ChessGameController.GameStateEnum gameState = gameController.makeMove(to);
-                    if (gameState == ChessGameController.GameStateEnum.ONGOING) {
-                        System.out.println("made a move");
+                    System.out.println(whiteMove);
+                    String[] squares = whiteMove.split(" ");
+                    String from = squares[0];
+                    String to = squares[1];
+                    if (gameController.setPlayablePiece(from)) {
+                        ChessGameController.GameStateEnum gameState = gameController.makeMove(to);
+                        System.out.println(boardService.isWhiteTurn());
+                        if (gameState == ChessGameController.GameStateEnum.ONGOING) {
+                            System.out.println("made a move");
+                        }
+                    }
+                }else{
+                    String blackMove = (String) blackIn.readObject();
+                    System.out.println(blackMove);
+                    String[] squares = blackMove.split(" ");
+                    String from = squares[0];
+                    String to = squares[1];
+                    if (gameController.setPlayablePiece(from)) {
+                        ChessGameController.GameStateEnum gameState = gameController.makeMove(to);
+                        if (gameState == ChessGameController.GameStateEnum.ONGOING) {
+                            System.out.println("made a move");
+                        }
                     }
                 }
-
-                boardService.getWhitePieces().forEach(x -> {
-                    if (x.getCurrentSquare() != null){
-                        System.out.print(x.getCurrentSquare().toAlgebraic() +" ");
-                    }
-                });
-                System.out.println();
-
 
 ////                 Black move
 //                var blackMove = blackIn.readObject();
@@ -141,7 +148,7 @@ public class ChessServer {
                 System.out.println("Failed to send board state: " + e.getMessage());
                 scheduler.shutdown();  // stop sending if a client disconnects
             }
-        }, 0, 1, java.util.concurrent.TimeUnit.SECONDS); // every 1 second
+        }, 0, 1, TimeUnit.MILLISECONDS); // every 1 milliseconds
     }
 
 }

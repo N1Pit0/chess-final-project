@@ -159,7 +159,7 @@ public class NewGameWindow {
                     "Start a new game?",
                     "Confirm", JOptionPane.YES_NO_OPTION);
             if (confirm == JOptionPane.YES_OPTION) {
-                new StartMenu().run();
+                new NewStartMenu().run();
                 gameWindow.dispose();
             }
         });

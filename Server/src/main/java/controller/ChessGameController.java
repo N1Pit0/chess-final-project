@@ -19,20 +19,16 @@ public class ChessGameController {
 
 
     private BoardService boardService;
-    private BoardInterface board;
     private CheckmateDetector checkmateDetector;
 
 
-    public ChessGameController(BoardInterface board,CheckmateDetector checkmateDetector) {
-        this.board = board;
-        this.boardService = new BoardServiceImpl(board);
+    public ChessGameController(BoardService boardService, CheckmateDetector checkmateDetector) {
+        this.boardService = boardService;
         this.checkmateDetector = checkmateDetector;
     }
 
     public boolean setPlayablePiece(String squareString) {
-        SquareInterface square = Arrays.stream(boardService.getBoardSquareArray())
-                .flatMap(Arrays::stream)
-                .filter(x -> x.toAlgebraic().equals(squareString)).findFirst().orElse(null);
+        SquareInterface square = Arrays.stream(boardService.getBoardSquareArray()).flatMap(Arrays::stream).filter(x -> x.toAlgebraic().equals(squareString)).findFirst().orElse(null);
         if (square == null || !square.isOccupied()) {
             return false;
         }
@@ -51,9 +47,11 @@ public class ChessGameController {
 
         SquareInterface targetSquare = Arrays.stream(boardService.getBoardSquareArray())
                 .flatMap(Arrays::stream)
-                .filter(x -> x.toAlgebraic().equals(squareString)).findFirst().orElse(null);
+                .filter(x -> x.toAlgebraic().equals(squareString))
+                .findFirst()
+                .orElse(null);
 
-        if(targetSquare == null){
+        if (targetSquare == null) {
             return GameStateEnum.ERROR;
         }
 
@@ -61,11 +59,9 @@ public class ChessGameController {
         if (boardService.getCurrPiece() == null) return GameStateEnum.ERROR;
 
         PieceColor currentPieceColor = boardService.getCurrPiece().getPieceColor();
-        if (currentPieceColor.equals(BLACK) && boardService.isWhiteTurn())
-            return GameStateEnum.ERROR;
+        if (currentPieceColor.equals(BLACK) && boardService.isWhiteTurn()) return GameStateEnum.ERROR;
 
-        if (currentPieceColor.equals(WHITE) && !boardService.isWhiteTurn())
-            return GameStateEnum.ERROR;
+        if (currentPieceColor.equals(WHITE) && !boardService.isWhiteTurn()) return GameStateEnum.ERROR;
 
         List<SquareInterface> legalMoves = currentPiece.getLegalMoves(boardService.getBoardSquareArray());
 
@@ -81,9 +77,7 @@ public class ChessGameController {
     }
 
 
-    private GameStateEnum makeMoveAndCheckSpecialRules(
-            SquareInterface originalSquare, PieceInterface originalPiece, PieceColor originalPieceColor,
-            PieceInterface targetPiece, SquareInterface targetSquare) {
+    private GameStateEnum makeMoveAndCheckSpecialRules(SquareInterface originalSquare, PieceInterface originalPiece, PieceColor originalPieceColor, PieceInterface targetPiece, SquareInterface targetSquare) {
 
 //        // Make the move
         originalPiece.move(targetSquare, boardService);
@@ -122,12 +116,8 @@ public class ChessGameController {
         }
     }
 
-    public enum GameStateEnum{
-        CHECKMATE,
-        CHECK,
-        STALEMATE,
-        ONGOING,
-        ERROR,
+    public enum GameStateEnum {
+        CHECKMATE, CHECK, STALEMATE, ONGOING, ERROR,
     }
 
 
