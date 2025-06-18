@@ -2,11 +2,11 @@ package services.board;
 
 
 
-import dtos.enums.PieceColor;
+import enums.PieceColor;
 import services.strategy.common.PieceInterface;
 
-import static dtos.enums.PieceColor.BLACK;
-import static dtos.enums.PieceColor.WHITE;
+import static enums.PieceColor.BLACK;
+import static enums.PieceColor.WHITE;
 
 
 public interface Move {

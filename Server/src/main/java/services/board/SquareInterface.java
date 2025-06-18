@@ -1,7 +1,7 @@
 package services.board;
 
 import dtos.SquareState;
-import dtos.enums.PieceColor;
+import enums.PieceColor;
 import services.strategy.common.PieceInterface;
 
 import java.io.Serializable;

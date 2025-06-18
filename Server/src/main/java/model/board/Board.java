@@ -3,22 +3,20 @@ package model.board;
 import dtos.BoardState;
 import dtos.PieceState;
 import dtos.SquareState;
-import dtos.enums.PieceColor;
+import enums.PieceColor;
 import lombok.Getter;
 import lombok.Setter;
 import model.pieces.*;
-import model.pieces.common.Piece;
 import services.board.BoardInterface;
 import services.board.SquareInterface;
 import services.strategy.common.PieceInterface;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static dtos.enums.PieceColor.BLACK;
-import static dtos.enums.PieceColor.WHITE;
+import static enums.PieceColor.BLACK;
+import static enums.PieceColor.WHITE;
 
 
 @Getter

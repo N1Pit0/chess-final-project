@@ -10,9 +10,9 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>Shared</module>
         <module>Server</module>
         <module>Client</module>
-        <module>Shared</module>
     </modules>
 
     <parent>

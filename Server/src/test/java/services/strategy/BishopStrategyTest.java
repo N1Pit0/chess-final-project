@@ -10,11 +10,11 @@ import services.strategy.common.PieceInterface;
 
 import java.util.List;
 
+import static enums.PieceColor.BLACK;
+import static enums.PieceColor.WHITE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
-import static services.enums.PieceColor.BLACK;
-import static services.enums.PieceColor.WHITE;
 
 public class BishopStrategyTest {
     @Mock
@@ -38,7 +38,6 @@ public class BishopStrategyTest {
         }
     }
 
-    // Test: Bishop moves from the center of the board
     @Test
     void shouldReturnLegalMovesFromCenterOfBoard() {
         // Arrange

@@ -1,7 +1,7 @@
 package dtos;
 
-import dtos.enums.PieceColor;
-import dtos.enums.PieceType;
+import enums.PieceColor;
+import enums.PieceType;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

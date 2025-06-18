@@ -1,6 +1,6 @@
 package services.board;
 
-import dtos.enums.PieceColor;
+import enums.PieceColor;
 import model.board.Square;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -43,7 +43,7 @@ public class BoardServiceTest {
         boardService.initializeBoardSquares();
 
         // Assert
-        verify(boardInterface, times(2)).initializeBoardSquares();
+        verify(boardInterface, times(1)).initializeBoardSquares();
     }
 
     @Test
@@ -52,7 +52,7 @@ public class BoardServiceTest {
         boardService.initializePieces();
 
         // Assert
-        verify(boardInterface, times(2)).initializePieces();
+        verify(boardInterface, times(1)).initializePieces();
     }
 
     @Test

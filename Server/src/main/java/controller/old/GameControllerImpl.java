@@ -1,6 +1,6 @@
-package controller;
+package controller.old;
 
-import dtos.enums.PieceColor;
+import enums.PieceColor;
 import services.board.BoardService;
 import services.board.SquareInterface;
 import services.checkmatedetection.CheckmateDetector;
@@ -8,8 +8,8 @@ import services.strategy.common.PieceInterface;
 
 import java.util.List;
 
-import static dtos.enums.PieceColor.BLACK;
-import static dtos.enums.PieceColor.WHITE;
+import static enums.PieceColor.BLACK;
+import static enums.PieceColor.WHITE;
 
 public class GameControllerImpl implements GameController {
     private final BoardService boardService;

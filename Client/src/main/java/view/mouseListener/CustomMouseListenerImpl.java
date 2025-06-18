@@ -9,7 +9,7 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 
-public class NewCustomMouseListenerImpl implements CustomBoardMouseListener {
+public class CustomMouseListenerImpl implements CustomBoardMouseListener {
 
     private final BoardState boardState;
     private final BoardStateView boardView;
@@ -17,7 +17,7 @@ public class NewCustomMouseListenerImpl implements CustomBoardMouseListener {
 
     private Point from = null;
 
-    public NewCustomMouseListenerImpl(BoardState boardState, BoardStateView boardView, MoveSender moveSender) {
+    public CustomMouseListenerImpl(BoardState boardState, BoardStateView boardView, MoveSender moveSender) {
         this.boardState = boardState;
         this.boardView = boardView;
         this.moveSender = moveSender;

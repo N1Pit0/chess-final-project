@@ -3,14 +3,11 @@ package view;
 import dtos.BoardState;
 import dtos.PieceState;
 import dtos.SquareState;
-import dtos.enums.ImagePath;
-import dtos.enums.PieceColor;
-import dtos.enums.PieceType;
+import enums.ImagePath;
+import enums.PieceColor;
+import enums.PieceType;
 import lombok.Getter;
 import lombok.Setter;
-import services.board.BoardService;
-import services.board.SquareInterface;
-import services.strategy.common.PieceInterface;
 import services.utils.ImageReaderUtil;
 import services.utils.ImageReaderUtilImpl;
 import services.utils.exceptions.ImageNotFoundException;
@@ -18,8 +15,8 @@ import services.utils.exceptions.ImageNotFoundException;
 import javax.swing.*;
 import java.awt.*;
 
-import static dtos.enums.PieceColor.BLACK;
-import static dtos.enums.PieceColor.WHITE;
+import static enums.PieceColor.BLACK;
+import static enums.PieceColor.WHITE;
 @Getter
 @Setter
 public class BoardStateView extends JPanel {

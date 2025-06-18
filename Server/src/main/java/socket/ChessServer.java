@@ -1,10 +1,9 @@
 package socket;
 
 import controller.ChessGameController;
-import controller.GameController;
 import dtos.BoardState;
 import dtos.GameInit;
-import dtos.enums.PieceColor;
+import enums.PieceColor;
 import model.board.Board;
 import services.board.BoardInterface;
 import services.board.BoardService;
@@ -109,10 +108,6 @@ public class ChessServer {
                     }
                 }
 
-////                 Black move
-//                var blackMove = blackIn.readObject();
-////                whiteOut.writeObject(blackMove);
-//                System.out.println(blackMove);
             }
         } catch (IOException | ClassNotFoundException e) {
             System.out.println("A player disconnected or game ended: " + e.getMessage());
@@ -121,7 +116,7 @@ public class ChessServer {
 
     public static void main(String[] args) {
         int port = 9999;
-        ChessServer server = new ChessServer();
+        ChessServer server = new ChessServer(); //წერო დააკომიტე ეს რაც დაწერე
         ExecutorService executor = Executors.newCachedThreadPool();
 
         try (ServerSocket serverSocket = new ServerSocket(port)) {

@@ -1,0 +1,8 @@
+dtos\BoardState.class
+enums\PieceColor.class
+dtos\SquareState.class
+dtos\GameInit.class
+dtos\PieceState.class
+enums\PieceType.class
+dtos\GameState.class
+enums\ImagePath.class

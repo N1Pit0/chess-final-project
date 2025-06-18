@@ -1,10 +1,7 @@
 package controller;
 
-import dtos.GameState;
-import dtos.enums.PieceColor;
-import services.board.BoardInterface;
+import enums.PieceColor;
 import services.board.BoardService;
-import services.board.BoardServiceImpl;
 import services.board.SquareInterface;
 import services.checkmatedetection.CheckmateDetector;
 import services.strategy.common.PieceInterface;
@@ -12,8 +9,8 @@ import services.strategy.common.PieceInterface;
 import java.util.Arrays;
 import java.util.List;
 
-import static dtos.enums.PieceColor.BLACK;
-import static dtos.enums.PieceColor.WHITE;
+import static enums.PieceColor.BLACK;
+import static enums.PieceColor.WHITE;
 
 public class ChessGameController {
 

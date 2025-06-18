@@ -1,6 +1,6 @@
 package services.strategy;
 
-import dtos.enums.PieceColor;
+import enums.PieceColor;
 import services.board.SquareInterface;
 import services.strategy.common.PieceInterface;
 import services.strategy.common.PieceStrategy;

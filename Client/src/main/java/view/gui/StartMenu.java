@@ -6,9 +6,11 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import static dtos.enums.ImagePath.RESOURCES_BPAWN_PNG;
-import static dtos.enums.ImagePath.RESOURCES_WPAWN_PNG;
-public class StartMenu implements Runnable {
+import static enums.ImagePath.RESOURCES_BPAWN_PNG;
+import static enums.ImagePath.RESOURCES_WPAWN_PNG;
+
+public class StartMenu implements Runnable{
+
     private static JButton getjButton(JFrame startWindow) {
         final JButton instr = new JButton("Instructions");
 
@@ -124,7 +126,7 @@ public class StartMenu implements Runnable {
             int mm = Integer.parseInt((String) minutes.getSelectedItem());
             int ss = Integer.parseInt((String) seconds.getSelectedItem());
 
-            new GameWindowImpl(bn, wn, hh, mm, ss);
+            new GameWindow(bn, wn, hh, mm, ss);
             startWindow.dispose();
         });
 

@@ -1,10 +1,9 @@
 package view;
 
 import dtos.PieceState;
-import dtos.enums.ImagePath;
-import dtos.enums.PieceColor;
-import dtos.enums.PieceType;
-import services.strategy.common.PieceInterface;
+import enums.ImagePath;
+import enums.PieceColor;
+import enums.PieceType;
 import services.utils.ImageReaderUtil;
 import services.utils.ImageReaderUtilImpl;
 import services.utils.exceptions.ImageNotFoundException;

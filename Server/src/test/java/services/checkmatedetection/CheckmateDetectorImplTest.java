@@ -1,6 +1,6 @@
 package services.checkmatedetection;
 
-import dtos.enums.PieceColor;
+import enums.PieceColor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

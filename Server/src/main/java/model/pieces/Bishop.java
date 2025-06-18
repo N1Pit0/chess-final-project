@@ -1,7 +1,7 @@
 package model.pieces;
 
-import dtos.enums.PieceColor;
-import dtos.enums.PieceType;
+import enums.PieceColor;
+import enums.PieceType;
 import model.pieces.common.Piece;
 import services.board.SquareInterface;
 import services.strategy.BishopStrategy;

@@ -1,9 +1,9 @@
 package services.strategy.common;
 
 import dtos.PieceState;
-import dtos.enums.PieceColor;
+import enums.PieceColor;
 
-import dtos.enums.PieceType;
+import enums.PieceType;
 import services.board.BoardService;
 import services.board.SquareInterface;
 

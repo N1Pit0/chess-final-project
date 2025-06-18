@@ -1,4 +1,4 @@
-package dtos.enums;
+package enums;
 
 public enum PieceColor {
     BLACK,

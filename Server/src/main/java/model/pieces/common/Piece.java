@@ -2,8 +2,8 @@ package model.pieces.common;
 
 import dtos.PieceState;
 import dtos.SquareState;
-import dtos.enums.PieceColor;
-import dtos.enums.PieceType;
+import enums.PieceColor;
+import enums.PieceType;
 import lombok.Getter;
 import lombok.Setter;
 import services.board.BoardService;

@@ -1,15 +1,13 @@
 package view;
 
-import dtos.PieceState;
 import dtos.SquareState;
 import lombok.Getter;
 import lombok.Setter;
-import services.board.SquareInterface;
 
 import javax.swing.*;
 import java.awt.*;
 
-import static dtos.enums.PieceColor.WHITE;
+import static enums.PieceColor.WHITE;
 @Getter
 @Setter
 public class SquareStateView extends JComponent{

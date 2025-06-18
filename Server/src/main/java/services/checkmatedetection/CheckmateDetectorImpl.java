@@ -1,6 +1,6 @@
 package services.checkmatedetection;
 
-import dtos.enums.PieceColor;
+import enums.PieceColor;
 import services.board.BoardService;
 import services.board.SquareInterface;
 import services.strategy.common.PieceInterface;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static dtos.enums.PieceColor.WHITE;
+import static enums.PieceColor.WHITE;
 
 
 public class CheckmateDetectorImpl implements CheckmateDetector {
