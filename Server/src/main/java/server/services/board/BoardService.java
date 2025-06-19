@@ -1,5 +1,6 @@
 package server.services.board;
 
+import dtos.GameStatus;
 import server.services.strategy.common.PieceInterface;
 
 import java.util.List;
@@ -44,4 +45,6 @@ public interface BoardService {
     int getCurrY();
 
     void setCurrY(int y);
+
+
 }

@@ -1,5 +1,6 @@
 package server.controller;
 
+import enums.GameStatusType;
 import enums.PieceColor;
 import server.services.board.BoardService;
 import server.services.board.SquareInterface;
@@ -30,10 +31,10 @@ public class ChessGameController {
             return false;
         }
         PieceInterface currentPiece = square.getOccupyingPiece();
-        if (currentPiece.equals(BLACK) && boardService.isWhiteTurn()) {
+        if (currentPiece.getPieceColor().equals(BLACK) && boardService.isWhiteTurn()) {
             return false;
         }
-        if (currentPiece.equals(WHITE) && !boardService.isWhiteTurn()) {
+        if (currentPiece.getPieceColor().equals(WHITE) && !boardService.isWhiteTurn()) {
             return false;
         }
         boardService.setCurrPiece(currentPiece);
@@ -114,7 +115,17 @@ public class ChessGameController {
     }
 
     public enum GameStateEnum {
-        CHECKMATE, CHECK, STALEMATE, ONGOING, ERROR,
+        CHECKMATE, CHECK, STALEMATE, ONGOING, ERROR;
+
+        public static GameStatusType toGameStatusType(GameStateEnum gameStateEnum) throws Exception {
+            return switch (gameStateEnum) {
+                case CHECKMATE -> GameStatusType.CHECKMATE;
+                case CHECK -> GameStatusType.CHECK;
+                case STALEMATE -> GameStatusType.STALEMATE;
+                case ONGOING -> GameStatusType.ONGOING;
+                default -> throw new Exception("did not mapped");
+            };
+        };
     }
 
 
