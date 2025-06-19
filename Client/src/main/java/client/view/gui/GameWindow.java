@@ -4,6 +4,7 @@ import client.ServerConnection;
 import dtos.BoardState;
 import dtos.PieceState;
 import dtos.SquareState;
+import enums.PieceColor;
 import server.model.board.Board;
 import server.services.board.BoardInterface;
 import server.services.utils.Clock;
@@ -19,7 +20,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import static enums.GameStatusType.CHECK;
 import static enums.ImagePath.RESOURCES_WPAWN_PNG;
+import static enums.PieceColor.BLACK;
 
 public class GameWindow {
     private final JFrame gameWindow;
@@ -83,6 +86,20 @@ public class GameWindow {
                 boardView.updateBoardState(newBoardState);
 
                 isWhiteTurn = newBoardState.isWhiteTurn();
+            });
+        }, status -> {
+            if (status == null) return;
+            SwingUtilities.invokeLater(() -> {
+                switch (status.statusType()) {
+                    case CHECK -> JOptionPane.showMessageDialog(null,
+                            status.affectedPlayer() + " is in check!",
+                            "Check", JOptionPane.WARNING_MESSAGE);
+
+                    case CHECKMATE -> checkmateOccurred(status.affectedPlayer());
+
+
+                    case STALEMATE -> stalemateOccurred();
+                }
             });
         });
 
@@ -187,6 +204,50 @@ public class GameWindow {
             for (int j = 0; j < squareStates[i].length; j++) {
                 squareStates[i][j].setOccupyingPiece(map.getOrDefault(squareStates[i][j], null));
             }
+        }
+    }
+
+
+    public void checkmateOccurred(PieceColor pieceColor) {
+        String outputMessage = "";
+        String title = "";
+        if (pieceColor.equals(BLACK)) {
+
+            outputMessage = "White wins by checkmate! Set up a new game? \n" +
+                    "Choosing \"No\" lets you look at the final situation.";
+
+            title = "White wins by checkmate!";
+        } else {
+
+            outputMessage = "Black wins by checkmate! Set up a new game? \n" +
+                    "Choosing \"No\" lets you look at the final situation.";
+
+            title = "Black wins by checkmate!";
+        }
+
+        endLogicHelper(outputMessage, title);
+    }
+
+    public void stalemateOccurred() {
+        String outputMessage = "Stalemate! Set up a new game? \n" +
+                "Choosing \"No\" lets you look at the final situation.";
+
+        String title = "Draw!";
+
+        endLogicHelper(outputMessage, title);
+    }
+
+    private void endLogicHelper(String outputMessage, String title) {
+        if (timer != null) timer.stop();
+        int n = JOptionPane.showConfirmDialog(
+                gameWindow,
+                outputMessage,
+                title,
+                JOptionPane.YES_NO_OPTION);
+
+        if (n == JOptionPane.YES_OPTION) {
+            SwingUtilities.invokeLater(new StartMenu());
+            gameWindow.dispose();
         }
     }
 }

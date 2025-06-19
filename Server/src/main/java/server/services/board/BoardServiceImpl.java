@@ -1,5 +1,6 @@
 package server.services.board;
 
+import dtos.GameStatus;
 import lombok.Getter;
 import lombok.Setter;
 import server.services.strategy.common.PieceInterface;
@@ -75,6 +76,5 @@ public class BoardServiceImpl implements BoardService {
     public SquareInterface[][] getBoardSquareArray() {
         return boardInterface.getBoardSquareArray();
     }
-
 
 }

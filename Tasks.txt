@@ -1,0 +1,35 @@
+You need to implement/apply/complete/use as many tasks, features & practices as possible.
+
+Tasks/Features (10 point for every student per each):
+
+Mandatory:
+1. Combine projects
+2. Split into Client & Server
+3. connect by TCP/IP
+4. Record every played game, store in a database
+5. Export played games’ recordings to PGN
+
+Optional:
+6. Register/login for players, store credentials in DB
+7. Allow spectators to watch the game
+8. Load games from PGN file into database
+9. Replay games from catalogue of games stored in DB
+10. Play with bot
+
+AJIP  (5 points per each for AJIP students)
+Lambdas
+Streams
+Records
+Threads
+I/O
+Networking
+Database
+
+JBTP  (5 points per each for JBTP students)
+Design Patterns
+Clean Code
+PMD
+Unit Tests
+Git
+Docker
+Maven/Gradle

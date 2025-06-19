@@ -1,5 +1,7 @@
 package server.socket;
 
+import dtos.GameStatus;
+import enums.GameStatusType;
 import server.controller.ChessGameController;
 import dtos.BoardState;
 import dtos.GameInit;
@@ -10,6 +12,7 @@ import server.services.board.BoardService;
 import server.services.board.BoardServiceImpl;
 import server.services.checkmatedetection.CheckmateDetectorImpl;
 
+import javax.swing.plaf.synth.Region;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -22,7 +25,7 @@ public class ChessServer {
 
     private final BoardInterface board = new Board();
     private final BoardService boardService = new BoardServiceImpl(board);
-
+    private GameStatus gameStatus;
 
     private final ChessGameController gameController;
 
@@ -80,39 +83,47 @@ public class ChessServer {
                             ObjectInputStream blackIn, ObjectOutputStream blackOut) {
         try {
             while (true) {
-                if(boardService.isWhiteTurn()) {
-                    String whiteMove = (String) whiteIn.readObject();
-//                blackOut.writeObject(whiteMove);
-                    System.out.println(whiteMove);
-                    String[] squares = whiteMove.split(" ");
-                    String from = squares[0];
-                    String to = squares[1];
-                    if (gameController.setPlayablePiece(from)) {
-                        ChessGameController.GameStateEnum gameState = gameController.makeMove(to);
-                        System.out.println(boardService.isWhiteTurn());
-                        if (gameState == ChessGameController.GameStateEnum.ONGOING) {
-                            System.out.println("made a move");
-                        }
-                    }
-                }else{
-                    String blackMove = (String) blackIn.readObject();
-                    System.out.println(blackMove);
-                    String[] squares = blackMove.split(" ");
-                    String from = squares[0];
-                    String to = squares[1];
-                    if (gameController.setPlayablePiece(from)) {
-                        ChessGameController.GameStateEnum gameState = gameController.makeMove(to);
-                        if (gameState == ChessGameController.GameStateEnum.ONGOING) {
-                            System.out.println("made a move");
-                        }
-                    }
+                if (boardService.isWhiteTurn()) {
+                    System.out.println("Waiting for White's move...");
+                    String move = (String) whiteIn.readObject();
+                    processMove(move, whiteOut, blackOut);
+                } else {
+                    System.out.println("Waiting for Black's move...");
+                    String move = (String) blackIn.readObject();
+                    processMove(move, whiteOut, blackOut);
                 }
-
             }
         } catch (IOException | ClassNotFoundException e) {
-            System.out.println("A player disconnected or game ended: " + e.getMessage());
+            System.out.println("A player disconnected or network issue: " + e.getMessage());
+        } catch (Exception e) {
+            System.err.println("Error during game handling: " + e.getMessage());
+            e.printStackTrace();
         }
     }
+
+    private void processMove(String move, ObjectOutputStream whiteOut, ObjectOutputStream blackOut) throws Exception {
+        System.out.println("Received move: " + move);
+
+        String[] squares = move.trim().split("\\s+");
+        if (squares.length != 2) {
+            System.err.println("Invalid move format: " + move);
+            return;
+        }
+
+        String from = squares[0];
+        String to = squares[1];
+
+        if (!gameController.setPlayablePiece(from)) {
+            System.err.println("Invalid piece selected at: " + from);
+            return;
+        }
+
+        ChessGameController.GameStateEnum gameState = gameController.makeMove(to);
+        System.out.println("Move " + from + " -> " + to + " executed, State: " + gameState);
+        if (gameState != ChessGameController.GameStateEnum.ERROR)
+            setGameStatus(gameState);
+    }
+
 
     public static void main(String[] args) {
         int port = 9999;
@@ -137,6 +148,7 @@ public class ChessServer {
         scheduler.scheduleAtFixedRate(() -> {
             try {
                 BoardState boardState = board.toBoardState();
+                boardState.setGameStatus(gameStatus);
                 whiteOut.writeObject(boardState);
                 blackOut.writeObject(boardState);
             } catch (IOException e) {
@@ -144,6 +156,25 @@ public class ChessServer {
                 scheduler.shutdown();  // stop sending if a client disconnects
             }
         }, 0, 1, TimeUnit.MILLISECONDS); // every 1 milliseconds
+    }
+
+    private void setGameStatus(ChessGameController.GameStateEnum gameStateEnum) throws Exception {
+
+        GameStatusType gameStatusType = ChessGameController.GameStateEnum.toGameStatusType(gameStateEnum);
+
+        // Determine affected player (for CHECK) or winner (for CHECKMATE)
+        PieceColor affectedColor = null;
+        if (gameStateEnum == ChessGameController.GameStateEnum.CHECK) {
+            affectedColor = boardService.isWhiteTurn() ? PieceColor.WHITE : PieceColor.BLACK;
+        } else if (gameStateEnum == ChessGameController.GameStateEnum.CHECKMATE) {
+            affectedColor = boardService.isWhiteTurn() ? PieceColor.BLACK : PieceColor.WHITE;
+        }
+
+        GameStatus gameStatus = new GameStatus(gameStatusType, affectedColor);
+
+        if(gameStateEnum != ChessGameController.GameStateEnum.ONGOING){
+            this.gameStatus = gameStatus;
+        }
     }
 
 }
