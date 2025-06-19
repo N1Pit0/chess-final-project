@@ -2,6 +2,8 @@ package client;
 
 import client.MoveSender;
 import dtos.BoardState;
+import dtos.GameStatus;
+import enums.GameStatusType;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -13,16 +15,18 @@ public class ServerConnection implements Runnable, MoveSender {
     private final String host;
     private final int port;
     private final Consumer<BoardState> boardStateListener;
+    private final Consumer<GameStatus> gameStatusListener;
 
     private Socket socket;
     private ObjectInputStream in;
     private ObjectOutputStream out;
     private volatile boolean running = true;
 
-    public ServerConnection(String host, int port, Consumer<BoardState> boardStateListener) {
+    public ServerConnection(String host, int port, Consumer<BoardState> boardStateListener, Consumer<GameStatus> gameStatusListener) {
         this.host = host;
         this.port = port;
         this.boardStateListener = boardStateListener;
+        this.gameStatusListener = gameStatusListener;
     }
 
     @Override
@@ -33,14 +37,21 @@ public class ServerConnection implements Runnable, MoveSender {
             in = new ObjectInputStream(socket.getInputStream());
 
             while (running) {
-                var object = in.readObject();
-                if(object instanceof BoardState) {
-                    BoardState state = (BoardState) in.readObject();
+                Object object = in.readObject();
+                if(object instanceof BoardState state) {
                     boardStateListener.accept(state);
+                    if(state.getGameStatus() != null){
+                        Thread.sleep(1000);
+                        gameStatusListener.accept(state.getGameStatus());
+                        closeConnection();
+                    }
                 }
+
             }
         } catch (IOException | ClassNotFoundException e) {
             System.err.println("Connection lost: " + e.getMessage());
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         } finally {
 //            closeConnection();
         }
