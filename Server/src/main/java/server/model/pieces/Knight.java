@@ -1,7 +1,7 @@
 package server.model.pieces;
 
-import enums.PieceColor;
-import enums.PieceType;
+import shared.enums.PieceColor;
+import shared.enums.PieceType;
 import server.model.pieces.common.Piece;
 import server.services.board.SquareInterface;
 

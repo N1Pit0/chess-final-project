@@ -1,4 +1,4 @@
-package dtos;
+package shared.dtos;
 
 import lombok.Getter;
 import lombok.Setter;

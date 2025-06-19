@@ -1,4 +1,4 @@
-package enums;
+package shared.enums;
 
 public enum ImagePath {
     RESOURCES_WBISHOP_PNG("/chess-images/wbishop.png"),

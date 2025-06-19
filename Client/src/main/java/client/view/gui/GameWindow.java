@@ -1,16 +1,18 @@
 package client.view.gui;
 
 import client.ServerConnection;
-import dtos.BoardState;
-import dtos.PieceState;
-import dtos.SquareState;
-import enums.PieceColor;
 import server.model.board.Board;
 import server.services.board.BoardInterface;
 import server.services.utils.Clock;
 import client.view.BoardStateView;
 import client.view.mouseListener.BoardMouseListener;
 import client.view.mouseListener.CustomMouseListenerImpl;
+import shared.dtos.BoardState;
+import shared.dtos.PieceState;
+import shared.dtos.SquareState;
+import shared.enums.PieceColor;
+
+import static shared.enums.ImagePath.RESOURCES_WPAWN_PNG;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -20,9 +22,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import static enums.GameStatusType.CHECK;
-import static enums.ImagePath.RESOURCES_WPAWN_PNG;
-import static enums.PieceColor.BLACK;
 
 public class GameWindow {
     private final JFrame gameWindow;
@@ -211,7 +210,7 @@ public class GameWindow {
     public void checkmateOccurred(PieceColor pieceColor) {
         String outputMessage = "";
         String title = "";
-        if (pieceColor.equals(BLACK)) {
+        if (pieceColor.equals(PieceColor.BLACK)) {
 
             outputMessage = "White wins by checkmate! Set up a new game? \n" +
                     "Choosing \"No\" lets you look at the final situation.";

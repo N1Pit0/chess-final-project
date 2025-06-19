@@ -1,6 +1,6 @@
 package server.services.checkmatedetection;
 
-import enums.PieceColor;
+import shared.enums.PieceColor;
 import server.services.board.BoardService;
 
 public interface CheckmateDetector {

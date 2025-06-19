@@ -41,7 +41,7 @@
         </dependency>
         <dependency>
             <groupId>chess-java-refatored</groupId>
-            <artifactId>Shared</artifactId>
+            <artifactId>shared</artifactId>
             <version>1.0</version>
             <scope>compile</scope>
         </dependency>

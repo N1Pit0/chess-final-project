@@ -1,9 +1,9 @@
 package client.view;
 
-import dtos.PieceState;
-import enums.ImagePath;
-import enums.PieceColor;
-import enums.PieceType;
+import shared.dtos.PieceState;
+import shared.enums.ImagePath;
+import shared.enums.PieceColor;
+import shared.enums.PieceType;
 import server.services.utils.ImageReaderUtil;
 import server.services.utils.ImageReaderUtilImpl;
 import server.services.utils.exceptions.ImageNotFoundException;

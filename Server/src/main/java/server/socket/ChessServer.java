@@ -1,18 +1,18 @@
 package server.socket;
 
-import dtos.GameStatus;
-import enums.GameStatusType;
+import shared.dtos.GameStatus;
+import shared.enums.GameStatusType;
+import shared.dtos.BoardState;
+import shared.dtos.GameInit;
+import shared.enums.PieceColor;
+
 import server.controller.ChessGameController;
-import dtos.BoardState;
-import dtos.GameInit;
-import enums.PieceColor;
 import server.model.board.Board;
 import server.services.board.BoardInterface;
 import server.services.board.BoardService;
 import server.services.board.BoardServiceImpl;
 import server.services.checkmatedetection.CheckmateDetectorImpl;
 
-import javax.swing.plaf.synth.Region;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;

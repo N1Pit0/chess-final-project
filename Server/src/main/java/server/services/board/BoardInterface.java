@@ -1,6 +1,6 @@
 package server.services.board;
 
-import dtos.BoardState;
+import shared.dtos.BoardState;
 import server.services.strategy.common.PieceInterface;
 
 import java.io.Serializable;

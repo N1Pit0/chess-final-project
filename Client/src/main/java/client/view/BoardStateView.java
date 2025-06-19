@@ -1,11 +1,11 @@
 package client.view;
 
-import dtos.BoardState;
-import dtos.PieceState;
-import dtos.SquareState;
-import enums.ImagePath;
-import enums.PieceColor;
-import enums.PieceType;
+import shared.dtos.BoardState;
+import shared.dtos.PieceState;
+import shared.dtos.SquareState;
+import shared.enums.ImagePath;
+import shared.enums.PieceColor;
+import shared.enums.PieceType;
 import lombok.Getter;
 import lombok.Setter;
 import server.services.utils.ImageReaderUtil;
@@ -15,8 +15,6 @@ import server.services.utils.exceptions.ImageNotFoundException;
 import javax.swing.*;
 import java.awt.*;
 
-import static enums.PieceColor.BLACK;
-import static enums.PieceColor.WHITE;
 @Getter
 @Setter
 public class BoardStateView extends JPanel {
@@ -60,8 +58,8 @@ public class BoardStateView extends JPanel {
 
         if (currPiece != null) {
             PieceColor pieceColor = currPiece.getPieceColor();
-            if ((pieceColor.equals(WHITE) && whiteTurn)
-                    || (pieceColor.equals(BLACK) && !whiteTurn)) {
+            if ((pieceColor.equals(PieceColor.WHITE) && whiteTurn)
+                    || (pieceColor.equals(PieceColor.BLACK) && !whiteTurn)) {
                 final Image i = getImage(currPiece.getPieceType(), currPiece.getPieceColor());
                 g.drawImage(i, this.boardState.getCurrX(), this.boardState.getCurrY(), null);
             }
@@ -74,22 +72,22 @@ public class BoardStateView extends JPanel {
 
         String imgFile;
         switch (pieceType) {
-            case PAWN -> imgFile = (pieceColor == BLACK)
+            case PAWN -> imgFile = (pieceColor == PieceColor.BLACK)
                     ? ImagePath.RESOURCES_BPAWN_PNG.label
                     : ImagePath.RESOURCES_WPAWN_PNG.label;
-            case KNIGHT -> imgFile = (pieceColor == BLACK)
+            case KNIGHT -> imgFile = (pieceColor == PieceColor.BLACK)
                     ? ImagePath.RESOURCES_BKNIGHT_PNG.label
                     : ImagePath.RESOURCES_WKNIGHT_PNG.label;
-            case BISHOP -> imgFile = (pieceColor == BLACK)
+            case BISHOP -> imgFile = (pieceColor == PieceColor.BLACK)
                     ? ImagePath.RESOURCES_BBISHOP_PNG.label
                     : ImagePath.RESOURCES_WBISHOP_PNG.label;
-            case ROOK -> imgFile = (pieceColor == BLACK)
+            case ROOK -> imgFile = (pieceColor == PieceColor.BLACK)
                     ? ImagePath.RESOURCES_BROOK_PNG.label
                     : ImagePath.RESOURCES_WROOK_PNG.label;
-            case QUEEN -> imgFile = (pieceColor == BLACK)
+            case QUEEN -> imgFile = (pieceColor == PieceColor.BLACK)
                     ? ImagePath.RESOURCES_BQUEEN_PNG.label
                     : ImagePath.RESOURCES_WQUEEN_PNG.label;
-            case KING -> imgFile = (pieceColor == BLACK)
+            case KING -> imgFile = (pieceColor == PieceColor.BLACK)
                     ? ImagePath.RESOURCES_BKING_PNG.label
                     : ImagePath.RESOURCES_WKING_PNG.label;
             default -> throw new IllegalArgumentException("Invalid piece type: " + pieceType);

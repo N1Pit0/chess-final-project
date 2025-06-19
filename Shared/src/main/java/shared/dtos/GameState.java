@@ -1,4 +1,4 @@
-package dtos;
+package shared.dtos;
 
 public class GameState {
 
