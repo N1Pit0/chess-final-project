@@ -1,6 +1,6 @@
-package dtos;
+package shared.dtos;
 
-import enums.PieceColor;
+import shared.enums.PieceColor;
 
 import java.io.Serializable;
 

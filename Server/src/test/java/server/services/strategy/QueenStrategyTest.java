@@ -1,6 +1,6 @@
 package server.services.strategy;
 
-import enums.PieceColor;
+import shared.enums.PieceColor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

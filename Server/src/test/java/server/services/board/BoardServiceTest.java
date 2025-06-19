@@ -1,6 +1,6 @@
 package server.services.board;
 
-import enums.PieceColor;
+import shared.enums.PieceColor;
 import server.model.board.Square;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

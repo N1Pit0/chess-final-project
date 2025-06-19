@@ -1,9 +1,9 @@
 package server.model.pieces.common;
 
-import dtos.PieceState;
-import dtos.SquareState;
-import enums.PieceColor;
-import enums.PieceType;
+import shared.dtos.PieceState;
+import shared.dtos.SquareState;
+import shared.enums.PieceColor;
+import shared.enums.PieceType;
 import lombok.Getter;
 import lombok.Setter;
 import server.services.board.BoardService;

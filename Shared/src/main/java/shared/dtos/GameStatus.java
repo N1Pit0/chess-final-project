@@ -1,8 +1,7 @@
-package dtos;
+package shared.dtos;
 
-import enums.GameStatusType;
-import enums.PieceColor;
-import lombok.Getter;
+import shared.enums.GameStatusType;
+import shared.enums.PieceColor;
 
 import java.io.Serializable;
 

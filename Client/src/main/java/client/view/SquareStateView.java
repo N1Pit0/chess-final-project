@@ -1,13 +1,13 @@
 package client.view;
 
-import dtos.SquareState;
+import shared.dtos.SquareState;
 import lombok.Getter;
 import lombok.Setter;
+import shared.enums.PieceColor;
 
 import javax.swing.*;
 import java.awt.*;
 
-import static enums.PieceColor.WHITE;
 @Getter
 @Setter
 public class SquareStateView extends JComponent{
@@ -25,7 +25,7 @@ public class SquareStateView extends JComponent{
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        if (this.square.getSquareColor().equals(WHITE)) {
+        if (this.square.getSquareColor().equals(PieceColor.WHITE)) {
             g.setColor(new Color(221, 192, 127));
         } else {
             g.setColor(new Color(101, 67, 33));

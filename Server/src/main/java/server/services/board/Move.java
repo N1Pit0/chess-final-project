@@ -1,13 +1,7 @@
 package server.services.board;
 
-
-
-import enums.PieceColor;
+import shared.enums.PieceColor;
 import server.services.strategy.common.PieceInterface;
-
-import static enums.PieceColor.BLACK;
-import static enums.PieceColor.WHITE;
-
 
 public interface Move {
 
@@ -34,10 +28,10 @@ public interface Move {
         PieceInterface targetPiece = targetSquare.getOccupyingPiece();
         PieceColor targetPieceColor = targetPiece.getPieceColor();
 
-        if (targetPieceColor.equals(BLACK)) {
+        if (targetPieceColor.equals(PieceColor.BLACK)) {
             boardService.getBlackPieces().remove(targetPiece);
         }
-        if (targetPieceColor.equals(WHITE)) {
+        if (targetPieceColor.equals(PieceColor.WHITE)) {
             boardService.getWhitePieces().remove(targetPiece);
         }
 

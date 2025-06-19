@@ -1,9 +1,7 @@
 package client;
 
-import client.MoveSender;
-import dtos.BoardState;
-import dtos.GameStatus;
-import enums.GameStatusType;
+import shared.dtos.BoardState;
+import shared.dtos.GameStatus;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;

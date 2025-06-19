@@ -1,6 +1,7 @@
 package server.services.strategy;
 
-import enums.PieceColor;
+import server.model.pieces.common.Piece;
+import shared.enums.PieceColor;
 import server.services.board.SquareInterface;
 import server.services.strategy.common.PieceInterface;
 import server.services.strategy.common.PieceStrategy;
@@ -8,8 +9,6 @@ import server.services.strategy.common.PieceStrategy;
 import java.util.ArrayList;
 import java.util.List;
 
-import static enums.PieceColor.BLACK;
-import static enums.PieceColor.WHITE;
 import static server.services.utils.MovementUtil.isInBound;
 
 public class PawnStrategy extends PieceStrategy {
@@ -27,9 +26,9 @@ public class PawnStrategy extends PieceStrategy {
         PieceColor currentPieceColor = super.getPiece().getPieceColor();
 
         // Vertical direction: positive for BLACK, negative for WHITE
-        int direction = (currentPieceColor.equals(BLACK)) ? 1 : -1;
+        int direction = (currentPieceColor.equals(PieceColor.BLACK)) ? 1 : -1;
 
-        PieceColor oppositePieceColor = currentPieceColor.equals(WHITE) ? BLACK : WHITE;
+        PieceColor oppositePieceColor = currentPieceColor.equals(PieceColor.WHITE) ? PieceColor.BLACK : PieceColor.WHITE;
 
         // Add potential moves using helper methods
         addStraightMove(legalMoves, squareArrayBoard, x, y, direction);

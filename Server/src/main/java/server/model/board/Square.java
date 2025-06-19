@@ -1,7 +1,7 @@
 package server.model.board;
 
-import dtos.SquareState;
-import enums.PieceColor;
+import shared.dtos.SquareState;
+import shared.enums.PieceColor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;

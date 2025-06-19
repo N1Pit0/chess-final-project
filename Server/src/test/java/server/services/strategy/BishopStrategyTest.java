@@ -7,11 +7,10 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import server.services.board.SquareInterface;
 import server.services.strategy.common.PieceInterface;
+import shared.enums.PieceColor;
 
 import java.util.List;
 
-import static enums.PieceColor.BLACK;
-import static enums.PieceColor.WHITE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
@@ -77,13 +76,13 @@ public class BishopStrategyTest {
         when(bishop.getCurrentSquare()).thenReturn(currentSquare);
         when(currentSquare.getXNum()).thenReturn(4);
         when(currentSquare.getYNum()).thenReturn(4);
-        when(bishop.getPieceColor()).thenReturn(WHITE);
+        when(bishop.getPieceColor()).thenReturn(PieceColor.WHITE);
 
         SquareInterface friendlyOccupiedSquare = squareArrayMock[6][6];
         PieceInterface friendlyPiece = mock(PieceInterface.class);
         when(friendlyOccupiedSquare.isOccupied()).thenReturn(true);
         when(friendlyOccupiedSquare.getOccupyingPiece()).thenReturn(friendlyPiece);
-        when(friendlyPiece.getPieceColor()).thenReturn(WHITE);
+        when(friendlyPiece.getPieceColor()).thenReturn(PieceColor.WHITE);
 
         // Act
         List<SquareInterface> legalMoves = bishopStrategy.getLegalMoves(squareArrayMock);
@@ -102,13 +101,13 @@ public class BishopStrategyTest {
         when(bishop.getCurrentSquare()).thenReturn(currentSquare);
         when(currentSquare.getXNum()).thenReturn(4);
         when(currentSquare.getYNum()).thenReturn(4);
-        when(bishop.getPieceColor()).thenReturn(WHITE);
+        when(bishop.getPieceColor()).thenReturn(PieceColor.WHITE);
 
         SquareInterface opponentOccupiedSquare = squareArrayMock[6][6];
         PieceInterface opponentPiece = mock(PieceInterface.class);
         when(opponentOccupiedSquare.isOccupied()).thenReturn(true);
         when(opponentOccupiedSquare.getOccupyingPiece()).thenReturn(opponentPiece);
-        when(opponentPiece.getPieceColor()).thenReturn(BLACK);
+        when(opponentPiece.getPieceColor()).thenReturn(PieceColor.BLACK);
 
         // Act
         List<SquareInterface> legalMoves = bishopStrategy.getLegalMoves(squareArrayMock);

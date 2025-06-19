@@ -1,6 +1,5 @@
 package server.services.board;
 
-import dtos.GameStatus;
 import server.services.strategy.common.PieceInterface;
 
 import java.util.List;

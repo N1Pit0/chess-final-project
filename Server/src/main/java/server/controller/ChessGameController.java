@@ -1,7 +1,7 @@
 package server.controller;
 
-import enums.GameStatusType;
-import enums.PieceColor;
+import shared.enums.GameStatusType;
+import shared.enums.PieceColor;
 import server.services.board.BoardService;
 import server.services.board.SquareInterface;
 import server.services.checkmatedetection.CheckmateDetector;
@@ -9,9 +9,6 @@ import server.services.strategy.common.PieceInterface;
 
 import java.util.Arrays;
 import java.util.List;
-
-import static enums.PieceColor.BLACK;
-import static enums.PieceColor.WHITE;
 
 public class ChessGameController {
 
@@ -31,10 +28,10 @@ public class ChessGameController {
             return false;
         }
         PieceInterface currentPiece = square.getOccupyingPiece();
-        if (currentPiece.getPieceColor().equals(BLACK) && boardService.isWhiteTurn()) {
+        if (currentPiece.getPieceColor().equals(PieceColor.BLACK) && boardService.isWhiteTurn()) {
             return false;
         }
-        if (currentPiece.getPieceColor().equals(WHITE) && !boardService.isWhiteTurn()) {
+        if (currentPiece.getPieceColor().equals(PieceColor.WHITE) && !boardService.isWhiteTurn()) {
             return false;
         }
         boardService.setCurrPiece(currentPiece);
@@ -57,9 +54,9 @@ public class ChessGameController {
         if (boardService.getCurrPiece() == null) return GameStateEnum.ERROR;
 
         PieceColor currentPieceColor = boardService.getCurrPiece().getPieceColor();
-        if (currentPieceColor.equals(BLACK) && boardService.isWhiteTurn()) return GameStateEnum.ERROR;
+        if (currentPieceColor.equals(PieceColor.BLACK) && boardService.isWhiteTurn()) return GameStateEnum.ERROR;
 
-        if (currentPieceColor.equals(WHITE) && !boardService.isWhiteTurn()) return GameStateEnum.ERROR;
+        if (currentPieceColor.equals(PieceColor.WHITE) && !boardService.isWhiteTurn()) return GameStateEnum.ERROR;
 
         List<SquareInterface> legalMoves = currentPiece.getLegalMoves(boardService.getBoardSquareArray());
 
@@ -88,7 +85,7 @@ public class ChessGameController {
             // Restore the captured piece (if any)
             if (targetPiece != null) {
                 targetSquare.setOccupyingPiece(targetPiece);
-                if (targetPiece.getPieceColor() == WHITE) {
+                if (targetPiece.getPieceColor() == PieceColor.WHITE) {
                     boardService.getWhitePieces().add(targetPiece);
                 } else {
                     boardService.getBlackPieces().add(targetPiece);
@@ -98,7 +95,7 @@ public class ChessGameController {
 //            System.out.println("Invalid move. Your king is in check!");
         } else {
 
-            PieceColor opponentColor = originalPieceColor.equals(WHITE) ? BLACK : WHITE;
+            PieceColor opponentColor = originalPieceColor.equals(PieceColor.WHITE) ? PieceColor.BLACK : PieceColor.WHITE;
             // Check if the opponent is in checkmate
             if (checkmateDetector.isInCheckmate(boardService, opponentColor)) {
                 return GameStateEnum.CHECKMATE;

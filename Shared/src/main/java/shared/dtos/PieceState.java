@@ -1,7 +1,7 @@
-package dtos;
+package shared.dtos;
 
-import enums.PieceColor;
-import enums.PieceType;
+import shared.enums.PieceColor;
+import shared.enums.PieceType;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

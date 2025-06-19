@@ -1,6 +1,5 @@
 package server.services.board;
 
-import dtos.GameStatus;
 import lombok.Getter;
 import lombok.Setter;
 import server.services.strategy.common.PieceInterface;
