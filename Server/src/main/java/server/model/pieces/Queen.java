@@ -22,4 +22,9 @@ public class Queen extends Piece {
         return new QueenStrategy(this).getLegalMoves(squareArrayBoard);
     }
 
+    @Override
+    public String toPGNFormatSymbol() {
+        return "Q";
+    }
+
 }

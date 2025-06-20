@@ -25,8 +25,14 @@ public class MatchService {
         return matchRepository.findAll();
     }
 
-    public void saveMatch(Match match) {
-        matchRepository.save(match);
+    public boolean saveMatch(Match match) {
+        try {
+            matchRepository.save(match);
+            return true;
+        }catch (Exception e){
+            System.err.println(e.getMessage());
+            return false;
+        }
     }
 
 }

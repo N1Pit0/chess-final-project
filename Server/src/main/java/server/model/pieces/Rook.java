@@ -22,5 +22,10 @@ public class Rook extends Piece {
         return new RookStrategy(this).getLegalMoves(squareArrayBoard);
     }
 
+    @Override
+    public String toPGNFormatSymbol() {
+        return "R";
+    }
+
 }
 

@@ -21,4 +21,9 @@ public class Bishop extends Piece {
         return new BishopStrategy(this).getLegalMoves(squareArrayBoard);
     }
 
+    @Override
+    public String toPGNFormatSymbol() {
+        return "B";
+    }
+
 }

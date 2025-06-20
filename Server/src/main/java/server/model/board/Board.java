@@ -1,5 +1,6 @@
 package server.model.board;
 
+import org.springframework.stereotype.Component;
 import shared.dtos.BoardState;
 import shared.dtos.PieceState;
 import shared.dtos.SquareState;
@@ -14,7 +15,7 @@ import server.services.strategy.common.PieceInterface;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
+@Component
 @Getter
 @Setter
 public class Board implements BoardInterface {

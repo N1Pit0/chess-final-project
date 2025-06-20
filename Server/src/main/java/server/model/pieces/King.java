@@ -21,4 +21,9 @@ public class King extends Piece {
         return new KingStrategy(this).getLegalMoves(squareArrayBoard);
     }
 
+    @Override
+    public String toPGNFormatSymbol() {
+        return "K";
+    }
+
 }
