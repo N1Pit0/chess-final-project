@@ -1,5 +1,7 @@
 package server.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import shared.enums.GameStatusType;
 import shared.enums.PieceColor;
 import server.services.board.BoardService;
@@ -9,14 +11,14 @@ import server.services.strategy.common.PieceInterface;
 
 import java.util.Arrays;
 import java.util.List;
-
+@Service
 public class ChessGameController {
 
 
     private BoardService boardService;
     private CheckmateDetector checkmateDetector;
 
-
+    @Autowired
     public ChessGameController(BoardService boardService, CheckmateDetector checkmateDetector) {
         this.boardService = boardService;
         this.checkmateDetector = checkmateDetector;

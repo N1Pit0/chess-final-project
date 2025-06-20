@@ -1,5 +1,8 @@
 package server.socket;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import server.services.pgn.PgnService;
 import shared.dtos.GameStatus;
 import shared.enums.GameStatusType;
 import shared.dtos.BoardState;
@@ -20,20 +23,23 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+@Service
+public class ChessServer{
 
-public class ChessServer {
-
-    private final BoardInterface board = new Board();
-    private final BoardService boardService = new BoardServiceImpl(board);
-    private GameStatus gameStatus;
-
+    private BoardService boardService;
+    private final PgnService pgnService;
     private final ChessGameController gameController;
+    private GameStatus gameStatus;
+    private final Matchmaker matchmaker;
 
-    public ChessServer() {
-        gameController = new ChessGameController(boardService, new CheckmateDetectorImpl());
+
+    @Autowired
+    public ChessServer(PgnService pgnService, BoardService boardService, ChessGameController gameController, Matchmaker matchmaker) {
+        this.pgnService = pgnService;
+        this.boardService = boardService;
+        this.gameController = gameController;
+        this.matchmaker = matchmaker;
     }
-
-    private final Matchmaker matchmaker = new SimpleMatchmaker();
 
     public void handleNewClient(Socket client) {
 
@@ -125,29 +131,11 @@ public class ChessServer {
     }
 
 
-    public static void main(String[] args) {
-        int port = 9999;
-        ChessServer server = new ChessServer(); //წერო დააკომიტე ეს რაც დაწერე
-        ExecutorService executor = Executors.newCachedThreadPool();
-
-        try (ServerSocket serverSocket = new ServerSocket(port)) {
-            System.out.println("Chess server started on port " + port);
-            while (true) {
-                Socket clientSocket = serverSocket.accept();
-                System.out.println("Client connected");
-                executor.submit(() -> server.handleNewClient(clientSocket));
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-
     private void startBoardSync(ObjectOutputStream whiteOut, ObjectOutputStream blackOut) {
         ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
         scheduler.scheduleAtFixedRate(() -> {
             try {
-                BoardState boardState = board.toBoardState();
+                BoardState boardState = boardService.getBoard().toBoardState();
                 boardState.setGameStatus(gameStatus);
                 whiteOut.writeObject(boardState);
                 blackOut.writeObject(boardState);
@@ -172,7 +160,7 @@ public class ChessServer {
 
         GameStatus gameStatus = new GameStatus(gameStatusType, affectedColor);
 
-        if(gameStateEnum != ChessGameController.GameStateEnum.ONGOING){
+        if (gameStateEnum != ChessGameController.GameStateEnum.ONGOING) {
             this.gameStatus = gameStatus;
         }
     }

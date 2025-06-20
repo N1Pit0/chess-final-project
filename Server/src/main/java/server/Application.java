@@ -5,26 +5,24 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
-import server.model.entity.Match;
-import server.model.entity.User;
 import server.repositories.MatchRepository;
 import server.repositories.UserRepository;
-import server.services.UserService;
+import server.socket.ChessServer;
+
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @SpringBootApplication
 @EnableMongoRepositories(basePackageClasses = {UserRepository.class, MatchRepository.class })
 public class Application implements CommandLineRunner {
-    private UserService userService;
-    private MatchRepository matchRepository;
+    private ChessServer server;
 
     @Autowired
-    public void setUserService(UserService userService) {
-        this.userService = userService;
-    }
-
-    @Autowired
-    public void setMatchRepository(MatchRepository matchRepository) {
-        this.matchRepository = matchRepository;
+    public void setServer(ChessServer server) {
+        this.server = server;
     }
 
     public static void main(String[] args) {
@@ -34,23 +32,19 @@ public class Application implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-//        userService.save(new User("pika", "email", "password"));
+        int port = 9999;
+        ExecutorService executor = Executors.newCachedThreadPool();
 
-//        userService.save(new User("nika", "email", "password"));
-
-        User user1 = userService.findByUsername("pika");
-
-        User user2 = userService.findByUsername("nika");
-
-//        Match match = new Match();
-//
-//        match.setUser1(user1);
-//        match.setUser2(user2);
-//        match.setResult("1-0");
-//
-//        matchRepository.save(match);
-
-        matchRepository.findAll().forEach(System.out::println);
+        try (ServerSocket serverSocket = new ServerSocket(port)) {
+            System.out.println("Chess server started on port " + port);
+            while (true) {
+                Socket clientSocket = serverSocket.accept();
+                System.out.println("Client connected");
+                executor.submit(() -> server.handleNewClient(clientSocket));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 }

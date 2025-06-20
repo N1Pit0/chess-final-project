@@ -1,9 +1,12 @@
 package server.socket;
 
+import org.springframework.stereotype.Component;
+
 import java.net.Socket;
 import java.util.LinkedList;
 import java.util.Queue;
 
+@Component
 public class SimpleMatchmaker implements Matchmaker {
 
     private final Queue<Socket> waitingClients = new LinkedList<>();

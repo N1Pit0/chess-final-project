@@ -27,4 +27,6 @@ public interface PieceInterface extends Serializable {
 
     PieceState toPieceState();
 
+    String toPGNFormatSymbol();
+
 }

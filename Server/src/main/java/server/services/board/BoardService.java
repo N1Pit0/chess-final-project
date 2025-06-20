@@ -45,5 +45,7 @@ public interface BoardService {
 
     void setCurrY(int y);
 
+    BoardInterface getBoard();
+
 
 }

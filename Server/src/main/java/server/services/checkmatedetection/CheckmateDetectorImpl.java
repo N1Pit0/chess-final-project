@@ -1,5 +1,6 @@
 package server.services.checkmatedetection;
 
+import org.springframework.stereotype.Service;
 import shared.enums.PieceColor;
 import server.services.board.BoardService;
 import server.services.board.SquareInterface;
@@ -8,7 +9,7 @@ import server.services.strategy.common.PieceInterface;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
+@Service
 public class CheckmateDetectorImpl implements CheckmateDetector {
 
     @Override

@@ -27,6 +27,11 @@ public class Pawn extends Piece {
     }
 
     @Override
+    public String toPGNFormatSymbol() {
+        return "";
+    }
+
+    @Override
     public List<SquareInterface> getLegalMoves(SquareInterface[][] squareArrayBoard) {
         return new PawnStrategy(this).getLegalMoves(squareArrayBoard);
     }

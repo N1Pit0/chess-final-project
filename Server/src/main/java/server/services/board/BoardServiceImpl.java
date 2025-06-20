@@ -2,12 +2,13 @@ package server.services.board;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.stereotype.Service;
 import server.services.strategy.common.PieceInterface;
 
 import java.util.List;
 import java.util.Optional;
 
-
+@Service
 @Getter
 @Setter
 public class BoardServiceImpl implements BoardService {
@@ -23,10 +24,6 @@ public class BoardServiceImpl implements BoardService {
 
     public BoardServiceImpl(BoardInterface boardInterface) {
         this.boardInterface = boardInterface;
-
-//        initializeBoardSquares();
-//
-//        initializePieces();
 
         whiteTurn = true;
 
@@ -74,6 +71,11 @@ public class BoardServiceImpl implements BoardService {
 
     public SquareInterface[][] getBoardSquareArray() {
         return boardInterface.getBoardSquareArray();
+    }
+
+    @Override
+    public BoardInterface getBoard() {
+        return boardInterface;
     }
 
 }

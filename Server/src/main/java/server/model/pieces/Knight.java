@@ -22,4 +22,9 @@ public class Knight extends Piece {
         return new KnightStrategy(this).getLegalMoves(squareArrayBoard);
     }
 
+    @Override
+    public String toPGNFormatSymbol() {
+        return "N";
+    }
+
 }

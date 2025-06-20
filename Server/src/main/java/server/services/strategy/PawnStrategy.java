@@ -1,6 +1,5 @@
 package server.services.strategy;
 
-import server.model.pieces.common.Piece;
 import shared.enums.PieceColor;
 import server.services.board.SquareInterface;
 import server.services.strategy.common.PieceInterface;
