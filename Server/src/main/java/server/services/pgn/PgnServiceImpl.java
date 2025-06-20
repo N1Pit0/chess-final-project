@@ -44,7 +44,7 @@ public class PgnServiceImpl implements PgnService {
         if (boardService.isWhiteTurn()) {
             result.append(moveCounter).append(".").append(pgnFormatMove).append(" ");
         } else {
-            result.append(pgnFormatMove);
+            result.append(pgnFormatMove).append(" ");
             moveCounter++;
         }
         return true;
