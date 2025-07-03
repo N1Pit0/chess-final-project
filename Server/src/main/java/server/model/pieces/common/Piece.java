@@ -22,13 +22,13 @@ public abstract class Piece implements PieceInterface {
     private PieceType pieceType;
     private boolean wasMoved;
 
+
     public Piece(PieceColor pieceColor, SquareInterface initSq) {
         this.pieceColor = pieceColor;
         this.currentSquare = initSq;
     }
 
     public boolean move(SquareInterface targetSquare, BoardService boardService) {
-
         return Move.makeMove(this, targetSquare, boardService);
     }
 

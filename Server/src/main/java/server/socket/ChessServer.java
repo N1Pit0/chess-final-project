@@ -2,6 +2,7 @@ package server.socket;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import server.model.entity.Match;
 import server.services.pgn.PgnService;
 import shared.dtos.GameStatus;
 import shared.enums.GameStatusType;
@@ -77,7 +78,7 @@ public class ChessServer{
             ObjectOutputStream blackOut = (p1Color == PieceColor.WHITE) ? out2 : out1;
 
 
-            startBoardSync(whiteOut, blackOut);
+                startBoardSync(whiteOut, blackOut);
             new Thread(() -> handleGame(whiteIn, whiteOut, blackIn, blackOut)).start();
 
         } catch (IOException e) {
@@ -126,8 +127,14 @@ public class ChessServer{
 
         ChessGameController.GameStateEnum gameState = gameController.makeMove(to);
         System.out.println("Move " + from + " -> " + to + " executed, State: " + gameState);
-        if (gameState != ChessGameController.GameStateEnum.ERROR)
+        if (gameState != ChessGameController.GameStateEnum.ERROR) {
+            if(gameState != ChessGameController.GameStateEnum.ONGOING && gameState != ChessGameController.GameStateEnum.CHECK){
+                Match match = new Match();
+                match.setResult("1-0");
+                pgnService.save(match);
+            }
             setGameStatus(gameState);
+        }
     }
 
 

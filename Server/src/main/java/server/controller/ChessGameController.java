@@ -2,6 +2,7 @@ package server.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import server.services.pgn.PgnService;
 import shared.enums.GameStatusType;
 import shared.enums.PieceColor;
 import server.services.board.BoardService;
@@ -11,17 +12,20 @@ import server.services.strategy.common.PieceInterface;
 
 import java.util.Arrays;
 import java.util.List;
+
 @Service
 public class ChessGameController {
 
 
     private BoardService boardService;
     private CheckmateDetector checkmateDetector;
+    private final PgnService pgnService;
 
     @Autowired
-    public ChessGameController(BoardService boardService, CheckmateDetector checkmateDetector) {
+    public ChessGameController(BoardService boardService, CheckmateDetector checkmateDetector, PgnService pgnService, PgnService pgnService1) {
         this.boardService = boardService;
         this.checkmateDetector = checkmateDetector;
+        this.pgnService = pgnService1;
     }
 
     public boolean setPlayablePiece(String squareString) {
@@ -75,7 +79,13 @@ public class ChessGameController {
 
 
     private GameStateEnum makeMoveAndCheckSpecialRules(SquareInterface originalSquare, PieceInterface originalPiece, PieceColor originalPieceColor, PieceInterface targetPiece, SquareInterface targetSquare) {
-
+        try {
+            String from = originalPiece.getCurrentSquare().toAlgebraic();
+            String to = targetSquare.toAlgebraic();
+            pgnService.addMove(from, to);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
 //        // Make the move
         originalPiece.move(targetSquare, boardService);
 
@@ -124,7 +134,9 @@ public class ChessGameController {
                 case ONGOING -> GameStatusType.ONGOING;
                 default -> throw new Exception("did not mapped");
             };
-        };
+        }
+
+        ;
     }
 
 
