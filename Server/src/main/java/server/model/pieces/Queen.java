@@ -1,5 +1,7 @@
 package server.model.pieces;
 
+import server.services.board.Move;
+import server.services.strategy.common.PieceStrategy;
 import shared.enums.PieceColor;
 import shared.enums.PieceType;
 import server.model.pieces.common.Piece;
@@ -11,15 +13,14 @@ import java.util.List;
 
 public class Queen extends Piece {
 
-    public Queen(PieceColor color, SquareInterface initSq) {
-        super(color, initSq);
+    public Queen(PieceColor pieceColor, SquareInterface initSq, Move move) {
+        super(pieceColor, initSq, move);
         setPieceType(PieceType.QUEEN);
     }
 
     @Override
     public List<SquareInterface> getLegalMoves(SquareInterface[][] squareArrayBoard) {
-
-        return new QueenStrategy(this).getLegalMoves(squareArrayBoard);
+        return getPieceStrategy().getLegalMoves(squareArrayBoard);
     }
 
     @Override

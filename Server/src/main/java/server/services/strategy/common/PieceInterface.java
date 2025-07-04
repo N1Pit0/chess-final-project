@@ -19,7 +19,7 @@ public interface PieceInterface extends Serializable {
 
     void setCurrentSquare(SquareInterface currentSquare);
 
-    boolean move(SquareInterface targetSquare, BoardService boardService);
+    boolean movePiece(SquareInterface targetSquare, BoardService boardService);
 
     boolean isWasMoved();
 
@@ -28,5 +28,7 @@ public interface PieceInterface extends Serializable {
     PieceState toPieceState();
 
     String toPGNFormatSymbol();
+
+    void setPieceStrategy(PieceStrategy pieceStrategy);
 
 }

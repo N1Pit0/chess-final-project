@@ -47,13 +47,13 @@ public class CheckmateDetectorImpl implements CheckmateDetector {
                     PieceInterface capturedPiece = targetSquare.getOccupyingPiece();
 
                     // Make the move
-                    piece.move(targetSquare, boardService);
+                    piece.movePiece(targetSquare, boardService);
 
                     // Check if the king is in check after the move
                     boolean isInCheckAfterMove = isInCheck(boardService, pieceColor);
 
                     // Undo the move
-                    piece.move(originalSquare, boardService);
+                    piece.movePiece(originalSquare, boardService);
                     if (capturedPiece != null) {
                         targetSquare.setOccupyingPiece(capturedPiece);
                         if (capturedPiece.getPieceColor() == PieceColor.WHITE) {

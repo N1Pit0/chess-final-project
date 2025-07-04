@@ -1,5 +1,7 @@
 package server.model.pieces;
 
+import server.services.board.Move;
+import server.services.strategy.common.PieceStrategy;
 import shared.enums.PieceColor;
 import shared.enums.PieceType;
 import lombok.Getter;
@@ -14,14 +16,14 @@ import java.util.List;
 @Getter
 public class Pawn extends Piece {
 
-    public Pawn(PieceColor color, SquareInterface initSq) {
-        super(color, initSq);
+    public Pawn(PieceColor pieceColor, SquareInterface initSq, Move move) {
+        super(pieceColor, initSq, move);
         setPieceType(PieceType.PAWN);
     }
 
     @Override
-    public boolean move(SquareInterface targetSquare, BoardService boardService) {
-        boolean b = super.move(targetSquare, boardService);
+    public boolean movePiece(SquareInterface targetSquare, BoardService boardService) {
+        boolean b = super.movePiece(targetSquare, boardService);
         setWasMoved(true);
         return b;
     }
@@ -33,10 +35,7 @@ public class Pawn extends Piece {
 
     @Override
     public List<SquareInterface> getLegalMoves(SquareInterface[][] squareArrayBoard) {
-        return new PawnStrategy(this).getLegalMoves(squareArrayBoard);
-    }
-
-    public void dummy() {
+        return getPieceStrategy().getLegalMoves(squareArrayBoard);
     }
 
 }

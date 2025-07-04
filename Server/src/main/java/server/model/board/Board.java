@@ -30,11 +30,14 @@ public class Board implements BoardInterface {
 
     private boolean isWhiteTurn;
 
+    private PieceFactory pieceFactory;
+
     public Board() {
 
         this.boardSquareArray = new SquareInterface[8][8];
         this.blackPieces = new ArrayList<>();
         this.whitePieces = new ArrayList<>();
+        this.pieceFactory = new PieceFactory();
         initializeBoardSquares();
         initializePieces();
     }
@@ -63,32 +66,32 @@ public class Board implements BoardInterface {
     public void initializePieces() {
 
         for (int x = 0; x < 8; x++) {
-            boardSquareArray[1][x].put(new Pawn(PieceColor.BLACK, boardSquareArray[1][x]));
-            boardSquareArray[6][x].put(new Pawn(PieceColor.WHITE, boardSquareArray[6][x]));
+            boardSquareArray[1][x].put(pieceFactory.getPawn(PieceColor.BLACK, boardSquareArray[1][x]));
+            boardSquareArray[6][x].put(pieceFactory.getPawn(PieceColor.WHITE, boardSquareArray[6][x]));
         }
 
-        boardSquareArray[7][3].put(new Queen(PieceColor.WHITE, boardSquareArray[7][3]));
-        boardSquareArray[0][3].put(new Queen(PieceColor.BLACK, boardSquareArray[0][3]));
+        boardSquareArray[7][3].put(pieceFactory.getQueen(PieceColor.WHITE, boardSquareArray[7][3]));
+        boardSquareArray[0][3].put(pieceFactory.getQueen(PieceColor.BLACK, boardSquareArray[0][3]));
 
-        this.blackKing = new King(PieceColor.BLACK, boardSquareArray[0][4]);
-        this.whiteKing = new King(PieceColor.WHITE, boardSquareArray[7][4]);
+        this.blackKing = pieceFactory.getKing(PieceColor.BLACK, boardSquareArray[0][4]);
+        this.whiteKing = pieceFactory.getKing(PieceColor.WHITE, boardSquareArray[7][4]);
         boardSquareArray[0][4].put(blackKing);
         boardSquareArray[7][4].put(whiteKing);
 
-        boardSquareArray[0][0].put(new Rook(PieceColor.BLACK, boardSquareArray[0][0]));
-        boardSquareArray[0][7].put(new Rook(PieceColor.BLACK, boardSquareArray[0][7]));
-        boardSquareArray[7][0].put(new Rook(PieceColor.WHITE, boardSquareArray[7][0]));
-        boardSquareArray[7][7].put(new Rook(PieceColor.WHITE, boardSquareArray[7][7]));
+        boardSquareArray[0][0].put(pieceFactory.getRook(PieceColor.BLACK, boardSquareArray[0][0]));
+        boardSquareArray[0][7].put(pieceFactory.getRook(PieceColor.BLACK, boardSquareArray[0][7]));
+        boardSquareArray[7][0].put(pieceFactory.getRook(PieceColor.WHITE, boardSquareArray[7][0]));
+        boardSquareArray[7][7].put(pieceFactory.getRook(PieceColor.WHITE, boardSquareArray[7][7]));
 
-        boardSquareArray[0][1].put(new Knight(PieceColor.BLACK, boardSquareArray[0][1]));
-        boardSquareArray[0][6].put(new Knight(PieceColor.BLACK, boardSquareArray[0][6]));
-        boardSquareArray[7][1].put(new Knight(PieceColor.WHITE, boardSquareArray[7][1]));
-        boardSquareArray[7][6].put(new Knight(PieceColor.WHITE, boardSquareArray[7][6]));
+        boardSquareArray[0][1].put(pieceFactory.getKnight(PieceColor.BLACK, boardSquareArray[0][1]));
+        boardSquareArray[0][6].put(pieceFactory.getKnight(PieceColor.BLACK, boardSquareArray[0][6]));
+        boardSquareArray[7][1].put(pieceFactory.getKnight(PieceColor.WHITE, boardSquareArray[7][1]));
+        boardSquareArray[7][6].put(pieceFactory.getKnight(PieceColor.WHITE, boardSquareArray[7][6]));
 
-        boardSquareArray[0][2].put(new Bishop(PieceColor.BLACK, boardSquareArray[0][2]));
-        boardSquareArray[0][5].put(new Bishop(PieceColor.BLACK, boardSquareArray[0][5]));
-        boardSquareArray[7][2].put(new Bishop(PieceColor.WHITE, boardSquareArray[7][2]));
-        boardSquareArray[7][5].put(new Bishop(PieceColor.WHITE, boardSquareArray[7][5]));
+        boardSquareArray[0][2].put(pieceFactory.getBishop(PieceColor.BLACK, boardSquareArray[0][2]));
+        boardSquareArray[0][5].put(pieceFactory.getBishop(PieceColor.BLACK, boardSquareArray[0][5]));
+        boardSquareArray[7][2].put(pieceFactory.getBishop(PieceColor.WHITE, boardSquareArray[7][2]));
+        boardSquareArray[7][5].put(pieceFactory.getBishop(PieceColor.WHITE, boardSquareArray[7][5]));
 
 
         for (int y = 0; y < 2; y++) {

@@ -1,5 +1,6 @@
 package server.model.pieces.common;
 
+import server.services.strategy.common.PieceStrategy;
 import shared.dtos.PieceState;
 import shared.dtos.SquareState;
 import shared.enums.PieceColor;
@@ -21,15 +22,19 @@ public abstract class Piece implements PieceInterface {
     private SquareInterface currentSquare;
     private PieceType pieceType;
     private boolean wasMoved;
+    private PieceStrategy  pieceStrategy;
+    private Move move;
 
 
-    public Piece(PieceColor pieceColor, SquareInterface initSq) {
+    public Piece(PieceColor pieceColor, SquareInterface initSq, Move move) {
         this.pieceColor = pieceColor;
         this.currentSquare = initSq;
+        this.wasMoved = false;
+        this.move = move;
     }
 
-    public boolean move(SquareInterface targetSquare, BoardService boardService) {
-        return Move.makeMove(this, targetSquare, boardService);
+    public boolean movePiece(SquareInterface targetSquare, BoardService boardService) {
+        return move.makeMove(this, targetSquare, boardService);
     }
 
     @Override

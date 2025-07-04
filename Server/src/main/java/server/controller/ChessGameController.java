@@ -87,12 +87,12 @@ public class ChessGameController {
             System.err.println(e.getMessage());
         }
 //        // Make the move
-        originalPiece.move(targetSquare, boardService);
+        originalPiece.movePiece(targetSquare, boardService);
 
         // Check if the current player's king is in check after the move
         if (checkmateDetector.isInCheck(boardService, originalPieceColor)) {
             // Undo the move
-            originalPiece.move(originalSquare, boardService);
+            originalPiece.movePiece(originalSquare, boardService);
 
             // Restore the captured piece (if any)
             if (targetPiece != null) {
