@@ -2,8 +2,8 @@ package server.model.board;
 
 import server.model.pieces.*;
 import server.services.board.BaseMove;
+import server.services.board.KingMove;
 import server.services.board.PawnMove;
-import server.services.board.RookMove;
 import server.services.board.SquareInterface;
 import server.services.strategy.*;
 import server.services.strategy.common.PieceStrategy;
@@ -38,7 +38,7 @@ public class PieceFactory {
     }
 
     public Rook getRook(PieceColor color, SquareInterface square) {
-        Rook rook = new Rook(color, square,new RookMove(new BaseMove()));
+        Rook rook = new Rook(color, square,new BaseMove());
 
         PieceStrategy pieceStrategy = new RookStrategy(rook);
 
@@ -56,7 +56,7 @@ public class PieceFactory {
     }
 
     public King getKing(PieceColor color, SquareInterface square) {
-        King king = new King(color, square,new BaseMove());
+        King king = new King(color, square,new KingMove(new BaseMove()));
 
         PieceStrategy pieceStrategy = new KingStrategy(king);
 

@@ -23,9 +23,19 @@ public class KingStrategy extends PieceStrategy {
         int y = super.getPiece().getCurrentSquare().getYNum();
         PieceColor currentColor = super.getPiece().getPieceColor();
 
+        int xStart, xEnd, yStart = -1, yEnd = 1;
+
+        if(!getPiece().isWasMoved()){
+            xStart = -2;
+            xEnd = 2;
+        }else {
+            xStart = -1;
+            xEnd = 1;
+        }
+
         // Check all adjacent squares in the 3x3 grid centered on (x, y)
-        for (int dx = -1; dx <= 1; dx++) {
-            for (int dy = -1; dy <= 1; dy++) {
+        for (int dx = xStart; dx <= xEnd; dx++) {
+            for (int dy = yStart; dy <= yEnd; dy++) {
                 // Skip the current square (dx = 0, dy = 0)
                 if (dx == 0 && dy == 0) {
                     continue;
