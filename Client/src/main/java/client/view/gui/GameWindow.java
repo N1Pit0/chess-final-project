@@ -22,7 +22,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-
 public class GameWindow {
     private final JFrame gameWindow;
     private ServerConnection serverConnection;
@@ -31,6 +30,7 @@ public class GameWindow {
     private Clock whiteClock;
     private Timer timer;
     private boolean isWhiteTurn = true;
+    private JLabel playerColorLabel;
 
     public GameWindow(String blackName, String whiteName, int hh, int mm, int ss) {
         blackClock = new Clock(hh, ss, mm);
@@ -83,22 +83,25 @@ public class GameWindow {
                 setPiecesToTheSquares(pieces, newBoardState.getBoardSquareArray());
 
                 boardView.updateBoardState(newBoardState);
-
                 isWhiteTurn = newBoardState.isWhiteTurn();
             });
         }, status -> {
             if (status == null) return;
             SwingUtilities.invokeLater(() -> {
                 switch (status.statusType()) {
-                    case CHECK -> JOptionPane.showMessageDialog(null,
-                            status.affectedPlayer() + " is in check!",
-                            "Check", JOptionPane.WARNING_MESSAGE);
-
+//                    case CHECK ->
+//                            JOptionPane.showMessageDialog(null, status.affectedPlayer() + " is in check!", "Check", JOptionPane.WARNING_MESSAGE);
                     case CHECKMATE -> checkmateOccurred(status.affectedPlayer());
-
-
                     case STALEMATE -> stalemateOccurred();
                 }
+            });
+        }, gameInit -> {
+            SwingUtilities.invokeLater(() -> {
+                String colorText = (gameInit.getPlayerColor() == PieceColor.BLACK ? "Black" : "White");
+                playerColorLabel.setText("You are playing as: " + colorText);
+                playerColorLabel.setForeground(gameInit.getPlayerColor() == PieceColor.WHITE ? Color.WHITE : Color.BLACK);
+                playerColorLabel.setOpaque(true);
+                playerColorLabel.setBackground(gameInit.getPlayerColor() == PieceColor.WHITE ? Color.BLACK : Color.LIGHT_GRAY);
             });
         });
 
@@ -107,7 +110,7 @@ public class GameWindow {
     }
 
     private JPanel gameDataPanel(String blackName, String whiteName, int hours, int minutes, int seconds) {
-        JPanel gameData = new JPanel(new GridLayout(2, 2));
+        JPanel gameData = new JPanel(new GridLayout(3, 2));
 
         JLabel whiteLabel = new JLabel(whiteName, SwingConstants.CENTER);
         JLabel blackLabel = new JLabel(blackName, SwingConstants.CENTER);
@@ -115,10 +118,15 @@ public class GameWindow {
         JLabel whiteTimeLabel = new JLabel(whiteClock.getFormattedTime(), SwingConstants.CENTER);
         JLabel blackTimeLabel = new JLabel(blackClock.getFormattedTime(), SwingConstants.CENTER);
 
+        playerColorLabel = new JLabel("Waiting for color assignment...", SwingConstants.CENTER);
+        playerColorLabel.setFont(new Font("Arial", Font.BOLD, 14));
+
         gameData.add(whiteLabel);
         gameData.add(blackLabel);
         gameData.add(whiteTimeLabel);
         gameData.add(blackTimeLabel);
+        gameData.add(playerColorLabel);
+        gameData.add(new JLabel()); // filler
 
         if (!(hours == 0 && minutes == 0 && seconds == 0)) {
             timer = new Timer(1000, e -> {
@@ -131,11 +139,7 @@ public class GameWindow {
 
                 if (current.isTimeUp()) {
                     timer.stop();
-                    int choice = JOptionPane.showConfirmDialog(
-                            gameWindow,
-                            winnerName + " wins by time! Start new game?",
-                            "Game Over",
-                            JOptionPane.YES_NO_OPTION);
+                    int choice = JOptionPane.showConfirmDialog(gameWindow, winnerName + " wins by time! Start new game?", "Game Over", JOptionPane.YES_NO_OPTION);
 
                     if (choice == JOptionPane.YES_OPTION) {
                         new StartMenu().run();
@@ -160,16 +164,11 @@ public class GameWindow {
         JPanel buttons = new JPanel(new GridLayout(1, 3, 10, 0));
 
         JButton instr = new JButton("How to play");
-        instr.addActionListener(e -> JOptionPane.showMessageDialog(gameWindow,
-                "This is a board view. Moves are enabled.\n" +
-                        "The clock shows turns between players.",
-                "Instructions", JOptionPane.INFORMATION_MESSAGE));
+        instr.addActionListener(e -> JOptionPane.showMessageDialog(gameWindow, "This is a board view. Moves are enabled.\n" + "The clock shows turns between players.", "Instructions", JOptionPane.INFORMATION_MESSAGE));
 
         JButton newGame = new JButton("New game");
         newGame.addActionListener(e -> {
-            int confirm = JOptionPane.showConfirmDialog(gameWindow,
-                    "Start a new game?",
-                    "Confirm", JOptionPane.YES_NO_OPTION);
+            int confirm = JOptionPane.showConfirmDialog(gameWindow, "Start a new game?", "Confirm", JOptionPane.YES_NO_OPTION);
             if (confirm == JOptionPane.YES_OPTION) {
                 new StartMenu().run();
                 gameWindow.dispose();
@@ -178,9 +177,7 @@ public class GameWindow {
 
         JButton quit = new JButton("Quit");
         quit.addActionListener(e -> {
-            int confirm = JOptionPane.showConfirmDialog(gameWindow,
-                    "Are you sure you want to quit?",
-                    "Exit", JOptionPane.YES_NO_OPTION);
+            int confirm = JOptionPane.showConfirmDialog(gameWindow, "Are you sure you want to quit?", "Exit", JOptionPane.YES_NO_OPTION);
             if (confirm == JOptionPane.YES_OPTION) {
                 if (timer != null) timer.stop();
                 gameWindow.dispose();
@@ -206,21 +203,14 @@ public class GameWindow {
         }
     }
 
-
     public void checkmateOccurred(PieceColor pieceColor) {
-        String outputMessage = "";
-        String title = "";
+        String outputMessage;
+        String title;
         if (pieceColor.equals(PieceColor.BLACK)) {
-
-            outputMessage = "White wins by checkmate! Set up a new game? \n" +
-                    "Choosing \"No\" lets you look at the final situation.";
-
+            outputMessage = "White wins by checkmate! \n" + "Choosing \"OK\" lets you look at the final situation.";
             title = "White wins by checkmate!";
         } else {
-
-            outputMessage = "Black wins by checkmate! Set up a new game? \n" +
-                    "Choosing \"No\" lets you look at the final situation.";
-
+            outputMessage = "Black wins by checkmate! \n" + "Choosing \"OK\" lets you look at the final situation.";
             title = "Black wins by checkmate!";
         }
 
@@ -228,25 +218,20 @@ public class GameWindow {
     }
 
     public void stalemateOccurred() {
-        String outputMessage = "Stalemate! Set up a new game? \n" +
-                "Choosing \"No\" lets you look at the final situation.";
+        String outputMessage = "Stalemate! Set up a new game? \n" + "Choosing \"No\" lets you look at the final situation.";
 
         String title = "Draw!";
-
         endLogicHelper(outputMessage, title);
     }
 
     private void endLogicHelper(String outputMessage, String title) {
         if (timer != null) timer.stop();
-        int n = JOptionPane.showConfirmDialog(
-                gameWindow,
-                outputMessage,
-                title,
-                JOptionPane.YES_NO_OPTION);
 
-        if (n == JOptionPane.YES_OPTION) {
-            SwingUtilities.invokeLater(new StartMenu());
-            gameWindow.dispose();
-        }
+        JOptionPane.showMessageDialog(gameWindow, outputMessage, title, JOptionPane.INFORMATION_MESSAGE);
+
+        // After user clicks OK, start menu and close current window
+        SwingUtilities.invokeLater(new StartMenu());
+        gameWindow.dispose();
     }
+
 }

@@ -47,6 +47,4 @@ public class Square implements SquareInterface {
         int rank = 8 - yNum;                   // yNum: 0 → 8, 1 → 7, ..., 7 → 1
         return String.valueOf(file) + rank;
     }
-
-
 }

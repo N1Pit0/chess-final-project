@@ -1,7 +1,9 @@
 package client;
 
 import shared.dtos.BoardState;
+import shared.dtos.GameInit;
 import shared.dtos.GameStatus;
+import shared.enums.PieceColor;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -18,13 +20,15 @@ public class ServerConnection implements Runnable, MoveSender {
     private Socket socket;
     private ObjectInputStream in;
     private ObjectOutputStream out;
+    private Consumer<GameInit> pieceColorListener;
     private volatile boolean running = true;
 
-    public ServerConnection(String host, int port, Consumer<BoardState> boardStateListener, Consumer<GameStatus> gameStatusListener) {
+    public ServerConnection(String host, int port, Consumer<BoardState> boardStateListener, Consumer<GameStatus> gameStatusListener, Consumer<GameInit> playerColorListener) {
         this.host = host;
         this.port = port;
         this.boardStateListener = boardStateListener;
         this.gameStatusListener = gameStatusListener;
+        this.pieceColorListener = playerColorListener;
     }
 
     @Override
@@ -41,10 +45,13 @@ public class ServerConnection implements Runnable, MoveSender {
                     if(state.getGameStatus() != null){
                         Thread.sleep(1000);
                         gameStatusListener.accept(state.getGameStatus());
-                        closeConnection();
+//                        closeConnection();
                     }
                 }
 
+                if(object instanceof GameInit) {
+                    pieceColorListener.accept((GameInit) object);
+                }
             }
         } catch (IOException | ClassNotFoundException e) {
             System.err.println("Connection lost: " + e.getMessage());
