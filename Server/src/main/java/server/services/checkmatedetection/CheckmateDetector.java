@@ -1,7 +1,7 @@
 package server.services.checkmatedetection;
 
-import shared.enums.PieceColor;
 import server.services.board.BoardService;
+import shared.enums.PieceColor;
 
 public interface CheckmateDetector {
     boolean isInCheck(BoardService boardService, PieceColor pieceColor);

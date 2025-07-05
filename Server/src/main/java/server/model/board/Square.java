@@ -1,12 +1,12 @@
 package server.model.board;
 
-import shared.dtos.SquareState;
-import shared.enums.PieceColor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import server.services.board.SquareInterface;
 import server.services.strategy.common.PieceInterface;
+import shared.dtos.SquareState;
+import shared.enums.PieceColor;
 
 
 @Getter
@@ -38,7 +38,7 @@ public class Square implements SquareInterface {
 
     @Override
     public SquareState toSquareState() {
-        return new SquareState(xNum,yNum,squareColor,null);
+        return new SquareState(xNum, yNum, squareColor, null);
     }
 
     @Override

@@ -29,7 +29,7 @@ public class MatchService {
         try {
             matchRepository.save(match);
             return true;
-        }catch (Exception e){
+        } catch (Exception e) {
             System.err.println(e.getMessage());
             return false;
         }

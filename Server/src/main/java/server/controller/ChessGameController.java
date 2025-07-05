@@ -2,13 +2,13 @@ package server.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import server.services.pgn.PgnService;
-import shared.enums.GameStatusType;
-import shared.enums.PieceColor;
 import server.services.board.BoardService;
 import server.services.board.SquareInterface;
 import server.services.checkmatedetection.CheckmateDetector;
+import server.services.pgn.PgnService;
 import server.services.strategy.common.PieceInterface;
+import shared.enums.GameStatusType;
+import shared.enums.PieceColor;
 
 import java.util.Arrays;
 import java.util.List;
@@ -17,9 +17,9 @@ import java.util.List;
 public class ChessGameController {
 
 
+    private final PgnService pgnService;
     private BoardService boardService;
     private CheckmateDetector checkmateDetector;
-    private final PgnService pgnService;
 
     @Autowired
     public ChessGameController(BoardService boardService, CheckmateDetector checkmateDetector, PgnService pgnService, PgnService pgnService1) {
@@ -87,12 +87,12 @@ public class ChessGameController {
             System.err.println(e.getMessage());
         }
 //        // Make the move
-        originalPiece.move(targetSquare, boardService);
+        originalPiece.movePiece(targetSquare, boardService);
 
         // Check if the current player's king is in check after the move
         if (checkmateDetector.isInCheck(boardService, originalPieceColor)) {
             // Undo the move
-            originalPiece.move(originalSquare, boardService);
+            originalPiece.movePiece(originalSquare, boardService);
 
             // Restore the captured piece (if any)
             if (targetPiece != null) {

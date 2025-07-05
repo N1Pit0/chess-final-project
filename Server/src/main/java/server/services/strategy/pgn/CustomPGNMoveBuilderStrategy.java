@@ -35,7 +35,8 @@ public class CustomPGNMoveBuilderStrategy implements PGNMoveBuilderStrategy {
         String currentFrom = piece.getCurrentSquare().toAlgebraic();
 
         // ♟️ Handle castling
-        if (piecePGNSymbol.equals("K") && Math.abs(from.charAt(0) - to.charAt(0)) == 2) {
+        int abs = Math.abs(from.charAt(0) - to.charAt(0));
+        if (piecePGNSymbol.equals("K") && abs == 2) {
             return (to.charAt(0) == 'g') ? "O-O" : "O-O-O";
         }
 
@@ -65,15 +66,15 @@ public class CustomPGNMoveBuilderStrategy implements PGNMoveBuilderStrategy {
         }
 
         // ♟️ Handle en passant (treated like a capture)
-        boolean isEnPassant = piecePGNSymbol.equals("") &&
+        boolean isEnPassant = piecePGNSymbol.isEmpty() &&
                 !targetSquare.isOccupied() &&
-                Math.abs(from.charAt(0) - to.charAt(0)) == 1;
+                abs == 1;
 
         boolean isCapture = targetSquare.isOccupied() || isEnPassant;
 
         if (isCapture) {
             // For pawn captures: prepend file
-            if (piecePGNSymbol.equals("")) {
+            if (piecePGNSymbol.isEmpty()) {
                 result.append(from.charAt(0));
             }
             result.append("x");

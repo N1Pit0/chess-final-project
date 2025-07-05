@@ -1,9 +1,9 @@
 package server.services.strategy;
 
-import shared.enums.PieceColor;
 import server.services.board.SquareInterface;
 import server.services.strategy.common.PieceInterface;
 import server.services.strategy.common.PieceStrategy;
+import shared.enums.PieceColor;
 
 import java.util.ArrayList;
 import java.util.List;

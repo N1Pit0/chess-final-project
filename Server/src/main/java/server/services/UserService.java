@@ -21,7 +21,7 @@ public class UserService {
 
     public User save(User user) {
 
-        String hashedPassword =  PasswordUtils.hashPassword(user.getPassword());
+        String hashedPassword = PasswordUtils.hashPassword(user.getPassword());
         user.setPassword(hashedPassword);
 
         return userRepository.save(user);
@@ -42,11 +42,11 @@ public class UserService {
     public void authenticate(String username, String password) {
         User user = userRepository.findByUsername(username);
 
-        if(user == null) {
+        if (user == null) {
             throw new UsernameNotFoundException("Username not found");
         }
 
-        if(!PasswordUtils.verifyPassword(password, user.getPassword())) {
+        if (!PasswordUtils.verifyPassword(password, user.getPassword())) {
             throw new BadCredentialsException("Bad credentials");
         }
 
