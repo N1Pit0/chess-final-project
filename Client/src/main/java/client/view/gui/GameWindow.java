@@ -8,6 +8,7 @@ import client.view.BoardStateView;
 import client.view.mouseListener.BoardMouseListener;
 import client.view.mouseListener.CustomMouseListenerImpl;
 import shared.dtos.BoardState;
+import shared.dtos.PgnContent;
 import shared.dtos.PieceState;
 import shared.dtos.SquareState;
 import shared.enums.PieceColor;
@@ -17,6 +18,9 @@ import static shared.enums.ImagePath.RESOURCES_WPAWN_PNG;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -32,11 +36,17 @@ public class GameWindow {
     private boolean isWhiteTurn = true;
     private JLabel playerColorLabel;
 
+    private String whiteName;
+    private String blackName;
+
     public GameWindow(String blackName, String whiteName, int hh, int mm, int ss) {
         blackClock = new Clock(hh, ss, mm);
         whiteClock = new Clock(hh, ss, mm);
 
         gameWindow = new JFrame("Chess");
+
+        this.blackName = blackName;
+        this.whiteName = whiteName;
 
         try {
             Image whiteImg = ImageIO.read(getClass().getResource(RESOURCES_WPAWN_PNG.label));
@@ -227,11 +237,63 @@ public class GameWindow {
     private void endLogicHelper(String outputMessage, String title) {
         if (timer != null) timer.stop();
 
-        JOptionPane.showMessageDialog(gameWindow, outputMessage, title, JOptionPane.INFORMATION_MESSAGE);
+        // Custom buttons
+        Object[] options = {"OK", "Export Game"};
 
-        // After user clicks OK, start menu and close current window
+        int choice = JOptionPane.showOptionDialog(
+                gameWindow,
+                outputMessage,
+                title,
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.INFORMATION_MESSAGE,
+                null,
+                options,
+                options[0] // Default button
+        );
+
+        if (choice == 1) {
+            // "Export Game" button clicked
+            exportGame();
+        }
+
+        // After user clicks any option, go to start menu and close window
         SwingUtilities.invokeLater(new StartMenu());
         gameWindow.dispose();
     }
+
+    private void exportGame() {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Export Game");
+
+        // Suggest .pgn file extension
+        fileChooser.setSelectedFile(new File("game.pgn"));
+
+        int userSelection = fileChooser.showSaveDialog(gameWindow);
+
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            File fileToSave = fileChooser.getSelectedFile();
+
+            // Ensure file has .pgn extension
+            if (!fileToSave.getName().toLowerCase().endsWith(".pgn")) {
+                fileToSave = new File(fileToSave.getParentFile(), fileToSave.getName() + ".pgn");
+            }
+
+            try (PrintWriter writer = new PrintWriter(fileToSave)) {
+                PgnContent content = serverConnection.GetPgnContent(); // use camelCase
+                if (content != null) {
+                    writer.println("[White \"" + content.getUser1() + "\"]");
+                    writer.println("[Black \"" + content.getUser2() + "\"]");
+                    writer.println(); // Empty line between header and moves
+                    writer.println(content.getGameContent().trim());
+                    writer.print(" " + content.getResult());
+                }
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(gameWindow, "Failed to export game.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
+
+
 
 }

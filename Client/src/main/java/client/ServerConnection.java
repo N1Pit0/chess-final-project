@@ -1,9 +1,12 @@
 package client;
 
+import client.interfaces.MoveSender;
+import client.interfaces.PgnExporter;
+import client.service.PgnExporterImpl;
 import shared.dtos.BoardState;
 import shared.dtos.GameInit;
 import shared.dtos.GameStatus;
-import shared.enums.PieceColor;
+import shared.dtos.PgnContent;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -16,6 +19,7 @@ public class ServerConnection implements Runnable, MoveSender {
     private final int port;
     private final Consumer<BoardState> boardStateListener;
     private final Consumer<GameStatus> gameStatusListener;
+    private PgnExporter pgnExporter;
 
     private Socket socket;
     private ObjectInputStream in;
@@ -23,12 +27,15 @@ public class ServerConnection implements Runnable, MoveSender {
     private Consumer<GameInit> pieceColorListener;
     private volatile boolean running = true;
 
+    private BoardState boardState;
+
     public ServerConnection(String host, int port, Consumer<BoardState> boardStateListener, Consumer<GameStatus> gameStatusListener, Consumer<GameInit> playerColorListener) {
         this.host = host;
         this.port = port;
         this.boardStateListener = boardStateListener;
         this.gameStatusListener = gameStatusListener;
         this.pieceColorListener = playerColorListener;
+//        this.pgnExporter = new PgnExporterImpl(in, out);
     }
 
     @Override
@@ -38,18 +45,25 @@ public class ServerConnection implements Runnable, MoveSender {
             out = new ObjectOutputStream(socket.getOutputStream());
             in = new ObjectInputStream(socket.getInputStream());
 
+            this.pgnExporter = new PgnExporterImpl(in, out);
+
+            boolean isGameStatusReceived = false;
             while (running) {
                 Object object = in.readObject();
-                if(object instanceof BoardState state) {
+                if (object instanceof BoardState state) {
+                    boardState = state;
                     boardStateListener.accept(state);
-                    if(state.getGameStatus() != null){
+                    if (state.getGameStatus() != null) {
                         Thread.sleep(1000);
-                        gameStatusListener.accept(state.getGameStatus());
-//                        closeConnection();
+                        if (!isGameStatusReceived) {
+                            gameStatusListener.accept(state.getGameStatus());
+                            isGameStatusReceived = true;
+                        }
+                        //                        closeConnection();
                     }
                 }
 
-                if(object instanceof GameInit) {
+                if (object instanceof GameInit) {
                     pieceColorListener.accept((GameInit) object);
                 }
             }
@@ -72,12 +86,17 @@ public class ServerConnection implements Runnable, MoveSender {
         }
     }
 
+    public synchronized PgnContent GetPgnContent() throws IOException {
+        return boardState.getPgnContent();
+    }
+
     public void closeConnection() {
         running = false;
         try {
             if (in != null) in.close();
             if (out != null) out.close();
             if (socket != null) socket.close();
-        } catch (IOException ignored) {}
+        } catch (IOException ignored) {
+        }
     }
 }
