@@ -6,7 +6,6 @@ import server.services.strategy.common.PieceStrategy;
 import server.services.utils.MovementUtil;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class KnightStrategy extends PieceStrategy {
@@ -29,7 +28,7 @@ public class KnightStrategy extends PieceStrategy {
                 {1, -2}, {2, -1}
         };
 
-        Arrays.stream(directions).forEach(direction -> {
+        for (int[] direction : directions) {
             int newX = x + direction[0];
             int newY = y + direction[1];
 
@@ -42,7 +41,7 @@ public class KnightStrategy extends PieceStrategy {
                 }
             }
 
-        });
+        }
 
         return legalMoves;
     }

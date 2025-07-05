@@ -1,14 +1,14 @@
 package server.services.checkmatedetection;
 
 import org.springframework.stereotype.Service;
-import shared.enums.PieceColor;
 import server.services.board.BoardService;
 import server.services.board.SquareInterface;
 import server.services.strategy.common.PieceInterface;
+import shared.enums.PieceColor;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 @Service
 public class CheckmateDetectorImpl implements CheckmateDetector {
 
@@ -41,8 +41,16 @@ public class CheckmateDetectorImpl implements CheckmateDetector {
     private boolean hasLegalMoveWithoutCheck(BoardService boardService, PieceColor pieceColor) {
         List<PieceInterface> currentPlayerPieces = pieceColor.equals(PieceColor.WHITE) ? boardService.getWhitePieces() : boardService.getBlackPieces();
 
+        int[][] marked = new int[8][8];
+
         return currentPlayerPieces.stream()
                 .flatMap(piece -> piece.getLegalMoves(boardService.getBoardSquareArray()).stream().map(targetSquare -> {
+                    int yNum = targetSquare.getYNum(), xNum = targetSquare.getXNum();
+
+                    if (marked[yNum][xNum] == 1) {
+                        return false;
+                    }
+
                     SquareInterface originalSquare = piece.getCurrentSquare();
                     PieceInterface capturedPiece = targetSquare.getOccupyingPiece();
 
@@ -57,14 +65,15 @@ public class CheckmateDetectorImpl implements CheckmateDetector {
                     if (capturedPiece != null) {
                         targetSquare.setOccupyingPiece(capturedPiece);
                         if (capturedPiece.getPieceColor() == PieceColor.WHITE) {
-                            List<PieceInterface> updatedWhitePieces = new ArrayList<>(boardService.getWhitePieces());
-                            updatedWhitePieces.add(capturedPiece);
-                            boardService.setWhitePieces(updatedWhitePieces);
+                            boardService.getWhitePieces().add(capturedPiece);
                         } else {
-                            List<PieceInterface> updatedBlackPieces = new ArrayList<>(boardService.getBlackPieces());
-                            updatedBlackPieces.add(capturedPiece);
-                            boardService.setBlackPieces(updatedBlackPieces);
+                            boardService.getBlackPieces().add(capturedPiece);
+                            ;
                         }
+                    }
+
+                    if (isInCheckAfterMove) {
+                        marked[yNum][xNum] = 1;
                     }
 
                     return !isInCheckAfterMove;

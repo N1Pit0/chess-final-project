@@ -10,8 +10,8 @@ import server.services.strategy.common.PieceStrategy;
 import shared.enums.PieceColor;
 
 public class PieceFactory {
-    public Pawn getPawn(PieceColor color, SquareInterface  square) {
-        Pawn piece = new Pawn(color, square,new PawnMove(new BaseMove()));
+    public Pawn getPawn(PieceColor color, SquareInterface square) {
+        Pawn piece = new Pawn(color, square, new PawnMove(new BaseMove()));
 
         PieceStrategy pieceStrategy = new PawnStrategy(piece);
 
@@ -20,7 +20,7 @@ public class PieceFactory {
     }
 
     public Bishop getBishop(PieceColor color, SquareInterface square) {
-        Bishop bishop = new Bishop(color, square,new BaseMove());
+        Bishop bishop = new Bishop(color, square, new BaseMove());
 
         PieceStrategy pieceStrategy = new BishopStrategy(bishop);
 
@@ -29,7 +29,7 @@ public class PieceFactory {
     }
 
     public Knight getKnight(PieceColor color, SquareInterface square) {
-        Knight knight = new Knight(color, square,new BaseMove());
+        Knight knight = new Knight(color, square, new BaseMove());
 
         PieceStrategy pieceStrategy = new KnightStrategy(knight);
 
@@ -38,7 +38,7 @@ public class PieceFactory {
     }
 
     public Rook getRook(PieceColor color, SquareInterface square) {
-        Rook rook = new Rook(color, square,new BaseMove());
+        Rook rook = new Rook(color, square, new BaseMove());
 
         PieceStrategy pieceStrategy = new RookStrategy(rook);
 
@@ -47,7 +47,7 @@ public class PieceFactory {
     }
 
     public Queen getQueen(PieceColor color, SquareInterface square) {
-        Queen queen = new Queen(color, square,new BaseMove());
+        Queen queen = new Queen(color, square, new BaseMove());
 
         PieceStrategy pieceStrategy = new QueenStrategy(queen);
 
@@ -56,7 +56,7 @@ public class PieceFactory {
     }
 
     public King getKing(PieceColor color, SquareInterface square) {
-        King king = new King(color, square,new KingMove(new BaseMove()));
+        King king = new King(color, square, new KingMove(new BaseMove()));
 
         PieceStrategy pieceStrategy = new KingStrategy(king);
 

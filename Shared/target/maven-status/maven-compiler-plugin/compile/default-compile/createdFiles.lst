@@ -3,7 +3,6 @@ shared\enums\PieceColor.class
 shared\dtos\GameInit.class
 shared\dtos\GameStatus.class
 shared\dtos\PieceState.class
-shared\dtos\GameState.class
 shared\enums\ImagePath.class
 shared\enums\PieceType.class
 shared\dtos\BoardState.class

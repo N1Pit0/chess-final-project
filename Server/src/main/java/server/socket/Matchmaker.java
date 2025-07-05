@@ -22,7 +22,12 @@ public interface Matchmaker {
             this.player2 = player2;
         }
 
-        public Socket getPlayer1() { return player1; }
-        public Socket getPlayer2() { return player2; }
+        public Socket getPlayer1() {
+            return player1;
+        }
+
+        public Socket getPlayer2() {
+            return player2;
+        }
     }
 }

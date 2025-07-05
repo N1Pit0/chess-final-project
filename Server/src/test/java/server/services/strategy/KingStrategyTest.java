@@ -42,6 +42,7 @@ public class KingStrategyTest {
     void shouldReturnLegalMovesFromCenterOfBoard() {
         // Arrange
         when(king.getCurrentSquare()).thenReturn(currentSquare);
+        when(king.isWasMoved()).thenReturn(true);
         when(currentSquare.getXNum()).thenReturn(4);
         when(currentSquare.getYNum()).thenReturn(4);
 
@@ -57,6 +58,7 @@ public class KingStrategyTest {
     void shouldReturnLegalMovesFromEdgeOfBoard() {
         // Arrange
         when(king.getCurrentSquare()).thenReturn(currentSquare);
+        when(king.isWasMoved()).thenReturn(true);
         when(currentSquare.getXNum()).thenReturn(0);
         when(currentSquare.getYNum()).thenReturn(4);
 
@@ -72,6 +74,7 @@ public class KingStrategyTest {
     void shouldReturnLegalMovesFromCornerOfBoard() {
         // Arrange
         when(king.getCurrentSquare()).thenReturn(currentSquare);
+        when(king.isWasMoved()).thenReturn(true);
         when(currentSquare.getXNum()).thenReturn(0);
         when(currentSquare.getYNum()).thenReturn(0);
 

@@ -1,20 +1,21 @@
 package server.model.board;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.stereotype.Component;
+import server.model.pieces.King;
+import server.services.board.BoardInterface;
+import server.services.board.SquareInterface;
+import server.services.strategy.common.PieceInterface;
 import shared.dtos.BoardState;
 import shared.dtos.PieceState;
 import shared.dtos.SquareState;
 import shared.enums.PieceColor;
-import lombok.Getter;
-import lombok.Setter;
-import server.model.pieces.*;
-import server.services.board.BoardInterface;
-import server.services.board.SquareInterface;
-import server.services.strategy.common.PieceInterface;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 @Component
 @Getter
 @Setter
@@ -129,7 +130,7 @@ public class Board implements BoardInterface {
         PieceState whiteKingState = whiteKing != null ? whiteKing.toPieceState() : null;
         PieceState blackKingState = blackKing != null ? blackKing.toPieceState() : null;
 
-        return new BoardState(squareStateArray,blackPieceStates, whitePieceStates, whiteKingState, blackKingState, isWhiteTurn);
+        return new BoardState(squareStateArray, blackPieceStates, whitePieceStates, whiteKingState, blackKingState, isWhiteTurn);
 
     }
 

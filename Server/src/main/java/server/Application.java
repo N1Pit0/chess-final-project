@@ -16,17 +16,17 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @SpringBootApplication
-@EnableMongoRepositories(basePackageClasses = {UserRepository.class, MatchRepository.class })
+@EnableMongoRepositories(basePackageClasses = {UserRepository.class, MatchRepository.class})
 public class Application implements CommandLineRunner {
     private ChessServer server;
+
+    public static void main(String[] args) {
+        SpringApplication.run(Application.class, args);
+    }
 
     @Autowired
     public void setServer(ChessServer server) {
         this.server = server;
-    }
-
-    public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
     }
 
     @Override

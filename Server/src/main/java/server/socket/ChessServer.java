@@ -2,25 +2,20 @@ package server.socket;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import server.controller.ChessGameController;
 import server.model.entity.Match;
+import server.services.board.BoardService;
 import server.services.pgn.PgnService;
-import shared.dtos.GameStatus;
-import shared.enums.GameStatusType;
 import shared.dtos.BoardState;
 import shared.dtos.GameInit;
+import shared.dtos.GameStatus;
+import shared.enums.GameStatusType;
 import shared.enums.PieceColor;
 
-import server.controller.ChessGameController;
-import server.model.board.Board;
-import server.services.board.BoardInterface;
-import server.services.board.BoardService;
-import server.services.board.BoardServiceImpl;
-import server.services.checkmatedetection.CheckmateDetectorImpl;
-
-import java.io.*;
-import java.net.ServerSocket;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -28,11 +23,11 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class ChessServer {
 
-    private BoardService boardService;
     private final PgnService pgnService;
     private final ChessGameController gameController;
-    private GameStatus gameStatus;
     private final Matchmaker matchmaker;
+    private BoardService boardService;
+    private GameStatus gameStatus;
 
 
     @Autowired
@@ -74,7 +69,7 @@ public class ChessServer {
             out2.writeObject(new GameInit(p2Color));
             try {
                 Thread.sleep(1000);
-            }catch (InterruptedException e) {
+            } catch (InterruptedException e) {
             }
             // White always goes first
             ObjectInputStream whiteIn = (p1Color == PieceColor.WHITE) ? in1 : in2;

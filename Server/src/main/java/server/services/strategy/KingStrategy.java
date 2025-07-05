@@ -1,10 +1,10 @@
 package server.services.strategy;
 
-import shared.enums.PieceColor;
 import server.services.board.SquareInterface;
 import server.services.strategy.common.PieceInterface;
 import server.services.strategy.common.PieceStrategy;
 import server.services.utils.MovementUtil;
+import shared.enums.PieceColor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,10 +25,10 @@ public class KingStrategy extends PieceStrategy {
 
         int xStart, xEnd, yStart = -1, yEnd = 1;
 
-        if(!getPiece().isWasMoved()){
+        if (!getPiece().isWasMoved()) {
             xStart = -2;
             xEnd = 2;
-        }else {
+        } else {
             xStart = -1;
             xEnd = 1;
         }

@@ -1,8 +1,8 @@
 package server.services.board;
 
+import server.services.strategy.common.PieceInterface;
 import shared.dtos.SquareState;
 import shared.enums.PieceColor;
-import server.services.strategy.common.PieceInterface;
 
 import java.io.Serializable;
 
