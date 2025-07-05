@@ -5,6 +5,7 @@ import lombok.Setter;
 import org.springframework.stereotype.Component;
 import server.model.pieces.King;
 import server.services.board.BoardInterface;
+import server.services.board.PieceFactoryInterface;
 import server.services.board.SquareInterface;
 import server.services.strategy.common.PieceInterface;
 import shared.dtos.BoardState;
@@ -26,19 +27,19 @@ public class Board implements BoardInterface {
     private List<PieceInterface> blackPieces;
     private List<PieceInterface> whitePieces;
 
-    private King whiteKing;
-    private King blackKing;
+    private PieceInterface whiteKing;
+    private PieceInterface blackKing;
 
     private boolean isWhiteTurn;
 
-    private PieceFactory pieceFactory;
+    private PieceFactoryInterface pieceFactory;
 
     public Board() {
 
         this.boardSquareArray = new SquareInterface[8][8];
         this.blackPieces = new ArrayList<>();
         this.whitePieces = new ArrayList<>();
-        this.pieceFactory = new PieceFactory();
+        this.pieceFactory = new PieceFactoryImpl();
         initializeBoardSquares();
         initializePieces();
     }
