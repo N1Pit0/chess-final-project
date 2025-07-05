@@ -50,7 +50,7 @@ public class CustomMouseListenerImpl implements CustomBoardMouseListener {
         try {
             moveSender.sendMove(moveStr);
         } catch (IOException ex) {
-            ex.printStackTrace();
+//            ex.printStackTrace();
             // Optionally: notify user about sending failure
         }
 

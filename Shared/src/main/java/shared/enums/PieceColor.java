@@ -1,6 +1,8 @@
 package shared.enums;
 
-public enum PieceColor {
+import java.io.Serializable;
+
+public enum PieceColor implements Serializable {
     BLACK,
     WHITE
 }

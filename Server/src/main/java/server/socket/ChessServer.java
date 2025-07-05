@@ -24,8 +24,9 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+
 @Service
-public class ChessServer{
+public class ChessServer {
 
     private BoardService boardService;
     private final PgnService pgnService;
@@ -52,6 +53,7 @@ public class ChessServer{
             System.out.println("Matched two clients!");
             Socket player1 = match.getPlayer1();
             Socket player2 = match.getPlayer2();
+//            this.boardService = new BoardServiceImpl(new Board());
             startGameSession(player1, player2);
         }
     }
@@ -70,7 +72,10 @@ public class ChessServer{
             // Send initial game data
             out1.writeObject(new GameInit(p1Color));
             out2.writeObject(new GameInit(p2Color));
-
+            try {
+                Thread.sleep(1000);
+            }catch (InterruptedException e) {
+            }
             // White always goes first
             ObjectInputStream whiteIn = (p1Color == PieceColor.WHITE) ? in1 : in2;
             ObjectOutputStream whiteOut = (p1Color == PieceColor.WHITE) ? out1 : out2;
@@ -78,7 +83,7 @@ public class ChessServer{
             ObjectOutputStream blackOut = (p1Color == PieceColor.WHITE) ? out2 : out1;
 
 
-                startBoardSync(whiteOut, blackOut);
+            startBoardSync(whiteOut, blackOut);
             new Thread(() -> handleGame(whiteIn, whiteOut, blackIn, blackOut)).start();
 
         } catch (IOException e) {
@@ -102,6 +107,7 @@ public class ChessServer{
             }
         } catch (IOException | ClassNotFoundException e) {
             System.out.println("A player disconnected or network issue: " + e.getMessage());
+            e.printStackTrace();
         } catch (Exception e) {
             System.err.println("Error during game handling: " + e.getMessage());
             e.printStackTrace();
@@ -128,7 +134,7 @@ public class ChessServer{
         ChessGameController.GameStateEnum gameState = gameController.makeMove(to);
         System.out.println("Move " + from + " -> " + to + " executed, State: " + gameState);
         if (gameState != ChessGameController.GameStateEnum.ERROR) {
-            if(gameState != ChessGameController.GameStateEnum.ONGOING && gameState != ChessGameController.GameStateEnum.CHECK){
+            if (gameState != ChessGameController.GameStateEnum.ONGOING && gameState != ChessGameController.GameStateEnum.CHECK) {
                 Match match = new Match();
                 match.setResult("1-0");
                 pgnService.save(match);
@@ -150,7 +156,7 @@ public class ChessServer{
                 System.out.println("Failed to send board state: " + e.getMessage());
                 scheduler.shutdown();  // stop sending if a client disconnects
             }
-        }, 0, 1, TimeUnit.MILLISECONDS); // every 1 milliseconds
+        }, 0, 50, TimeUnit.MILLISECONDS); // every 1 milliseconds
     }
 
     private void setGameStatus(ChessGameController.GameStateEnum gameStateEnum) throws Exception {

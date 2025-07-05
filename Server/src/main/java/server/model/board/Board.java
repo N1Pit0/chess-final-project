@@ -128,7 +128,6 @@ public class Board implements BoardInterface {
 
         return new BoardState(squareStateArray,blackPieceStates, whitePieceStates, whiteKingState, blackKingState, isWhiteTurn);
 
-
     }
 
 }
