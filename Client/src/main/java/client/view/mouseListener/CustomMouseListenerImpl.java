@@ -1,6 +1,6 @@
 package client.view.mouseListener;
 
-import client.MoveSender;
+import client.interfaces.MoveSender;
 import shared.dtos.BoardState;
 
 import client.view.BoardStateView;

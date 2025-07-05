@@ -26,7 +26,7 @@ public class PgnServiceImpl implements PgnService {
     }
 
     @Override
-    public boolean save(Match match) {
+    public Match save(Match match) {
         match.setPgn(result.toString());
         match.setDatePlayed(LocalDateTime.now());
         return matchService.saveMatch(match);

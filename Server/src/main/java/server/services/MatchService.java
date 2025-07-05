@@ -25,13 +25,12 @@ public class MatchService {
         return matchRepository.findAll();
     }
 
-    public boolean saveMatch(Match match) {
+    public Match saveMatch(Match match) {
         try {
-            matchRepository.save(match);
-            return true;
+            return matchRepository.save(match);
         } catch (Exception e) {
             System.err.println(e.getMessage());
-            return false;
+            return new Match();
         }
     }
 

@@ -24,6 +24,8 @@ public class BoardState implements Serializable {
 
     private GameStatus gameStatus;
 
+    private PgnContent pgnContent;
+
     public BoardState(SquareState[][] boardSquareArray,List<PieceState> blackPieces, List<PieceState> whitePieces,PieceState whiteKing,PieceState blackKing, boolean whiteTurn) {
         this.boardSquareArray = boardSquareArray;
         this.blackPieces = blackPieces;

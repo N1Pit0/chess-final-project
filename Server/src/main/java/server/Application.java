@@ -25,10 +25,10 @@ public class Application implements CommandLineRunner {
     }
 
     @Autowired
-    public void setServer(ChessServer server) {
+    public void getServer(ChessServer server) {
         this.server = server;
     }
-
+//error
     @Override
     public void run(String... args) throws Exception {
 
